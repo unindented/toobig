@@ -1,0 +1,5 @@
+config/
+coverage/
+src/
+tsconfig*
+tslint*

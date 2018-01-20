@@ -1,0 +1,14 @@
+{
+  "parser": "typescript",
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": ["*.json", ".*rc"],
+      "options": { "parser": "json" }
+    },
+    {
+      "files": ["*.md"],
+      "options": { "parser": "markdown" }
+    }
+  ]
+}
