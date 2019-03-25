@@ -1,12 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`toobig passing a config file with too-strict settings throws 1`] = `[Error: some files are over their max size]`;
-
-exports[`toobig passing a non-existent config file throws 1`] = `[Error: ENOENT: no such file or directory, open '/Users/daniel/Code/toobig/src/__fixtures__/toobig.notfound.json']`;
-
-exports[`toobig passing an empty config file throws 1`] = `[Error: config file found at "/Users/daniel/Code/toobig/src/__fixtures__/toobig.empty.json" is missing key "restrictions"]`;
-
-exports[`toobig passing an invalid config file throws 1`] = `
-[JSONError: JSON Error in /Users/daniel/Code/toobig/src/__fixtures__/toobig.invalid.json:
-Unexpected end of JSON input while parsing near '...   "dist": "8KB"  }']
-`;

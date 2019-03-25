@@ -50,6 +50,26 @@ describe("toobig", () => {
     });
   });
 
+  describe("with a config file having budgets that will be exceeded", () => {
+    beforeAll(() => {
+      config = path.resolve(__dirname, "__fixtures__/toobig.fail.json");
+    });
+
+    it("returns a rejecting promise with the error", async () => {
+      await expect(tooBig({ config })).rejects.toEqual(
+        new Error("some files are over their max size"),
+      );
+    });
+
+    it("logs results", async () => {
+      try {
+        await tooBig({ config });
+      } catch {
+        expect(console.log).toHaveBeenCalled();
+      }
+    });
+  });
+
   describe("passing a config file with too-strict settings", () => {
     beforeAll(() => {
       config = path.resolve(__dirname, "__fixtures__/toobig.strict.json");
@@ -66,7 +86,13 @@ describe("toobig", () => {
     });
 
     it("throws", async () => {
-      await expect(tooBig({ config })).rejects.toMatchSnapshot();
+      try {
+        await tooBig({ config });
+      } catch (err) {
+        expect(err.message).toMatch(
+          /JSON Error in .+\/src\/__fixtures__\/toobig.invalid.json/,
+        );
+      }
     });
   });
 
@@ -76,7 +102,13 @@ describe("toobig", () => {
     });
 
     it("throws", async () => {
-      await expect(tooBig({ config })).rejects.toMatchSnapshot();
+      try {
+        await tooBig({ config });
+      } catch (err) {
+        expect(err.message).toMatch(
+          /config file found at .+\/src\/__fixtures__\/toobig.empty.json\" is missing key \"restrictions"/,
+        );
+      }
     });
   });
 
@@ -86,7 +118,13 @@ describe("toobig", () => {
     });
 
     it("throws", async () => {
-      await expect(tooBig({ config })).rejects.toMatchSnapshot();
+      try {
+        await tooBig({ config });
+      } catch (err) {
+        expect(err.message).toMatch(
+          /no such file or directory, open .+\/src\/__fixtures__\/toobig.notfound.json'/,
+        );
+      }
     });
   });
 });
