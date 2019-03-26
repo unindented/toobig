@@ -1,5 +1,4 @@
 {
   "restrictions": {
     "src/*.ts": "2KB",
-    "dist": "8KB"
   }
