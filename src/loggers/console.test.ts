@@ -1,5 +1,5 @@
 import ConsoleLogger from "./console";
-import { Logger, Result } from "./logger";
+import { Logger } from "./logger";
 
 (global as any).console = {
   log: jest.fn(),
@@ -17,12 +17,9 @@ describe("console logger", () => {
   });
 
   describe(".log", () => {
-    let result: Result;
-
     describe("for a failure result", () => {
       beforeEach(() => {
-        result = { path: "foo", size: 100, maxSize: 80 };
-        logger.log(result);
+        logger.log({ path: "foo", size: 100, maxSize: 80 });
       });
 
       it("writes the correct message to console.log", () => {
@@ -34,8 +31,7 @@ describe("console logger", () => {
 
     describe("for a success result", () => {
       beforeEach(() => {
-        result = { path: "foo", size: 80, maxSize: 100 };
-        logger.log(result);
+        logger.log({ path: "foo", size: 80, maxSize: 100 });
       });
 
       it("writes the correct message to console.log", () => {

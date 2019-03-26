@@ -1,6 +1,7 @@
 {
   "rootDir": "..",
   "cacheDirectory": "<rootDir>/.jest",
+  "clearMocks": true,
   "moduleFileExtensions": [
     "js",
     "json",

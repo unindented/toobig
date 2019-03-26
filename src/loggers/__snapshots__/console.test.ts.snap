@@ -11,9 +11,6 @@ Array [
 exports[`console logger .log for a success result writes the correct message to console.log 1`] = `
 Array [
   Array [
-    "[31mfoo 100B >= 80B[39m",
-  ],
-  Array [
     "[32mfoo 80B < 100B[39m",
   ],
 ]
