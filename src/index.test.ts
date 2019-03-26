@@ -4,7 +4,7 @@ jest.mock("./loggers/json.ts");
 import * as path from "path";
 
 import tooBig from ".";
-import { /* CompositeLogger,*/ ConsoleLogger, JsonLogger } from "./loggers";
+import { ConsoleLogger, JsonLogger } from "./loggers";
 
 describe("toobig", () => {
   beforeEach(() => {
