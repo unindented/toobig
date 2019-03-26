@@ -35,7 +35,7 @@ export default async function tooBig(options: Options = {}): Promise<void> {
 
   const logger = createLogger(options);
   results.forEach(result => logger.log(result));
-  logger.finalize();
+  await logger.finalize();
 
   const anyOverMaxSize = results.some(isOverMaxSize);
   if (anyOverMaxSize) {
