@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`console logger .log for a failure result writes the correct message to console.log 1`] = `
+Array [
+  Array [
+    "[31mfoo 100B >= 80B[39m",
+  ],
+]
+`;
+
+exports[`console logger .log for a success result writes the correct message to console.log 1`] = `
+Array [
+  Array [
+    "[31mfoo 100B >= 80B[39m",
+  ],
+  Array [
+    "[32mfoo 80B < 100B[39m",
+  ],
+]
+`;

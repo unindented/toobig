@@ -1,8 +1,15 @@
 import bytes = require("bytes");
-import chalk from "chalk";
 import cosmiconfig = require("cosmiconfig");
 import getFolderSize = require("get-folder-size");
 import glob = require("glob");
+
+import {
+  CompositeLogger,
+  ConsoleLogger,
+  JsonLogger,
+  Logger,
+  Result,
+} from "./loggers";
 
 // tslint:disable-next-line:no-var-requires
 const pkg = require("../package.json");
@@ -10,6 +17,7 @@ const pkg = require("../package.json");
 export interface Options {
   config?: string;
   quiet?: boolean;
+  json?: string;
 }
 
 export interface Config {
@@ -20,30 +28,33 @@ export interface Restrictions {
   [path: string]: string;
 }
 
-export interface ExpandedRestriction {
-  path: string;
-  size: number;
-  maxSize: number;
-}
-
 export default async function tooBig(options: Options = {}): Promise<void> {
-  const { config, quiet } = options;
+  const { config } = options;
   const { restrictions } = await getConfig(config);
-  const expandedRestrictions = await expandRestrictions(restrictions);
+  const results = await evaluateRestrictions(restrictions);
 
-  const anyOverMaxSize = expandedRestrictions.reduce<boolean>(
-    (memo, restriction) => {
-      if (!quiet) {
-        logRestriction(restriction);
-      }
-      return memo || isOverMaxSize(restriction);
-    },
-    false,
-  );
+  const logger = createLogger(options);
+  results.forEach(result => logger.log(result));
+  logger.finalize();
 
+  const anyOverMaxSize = results.some(isOverMaxSize);
   if (anyOverMaxSize) {
     throw new Error("some files are over their max size");
   }
+}
+
+function createLogger(options: Options): Logger {
+  const loggers: Logger[] = [];
+  if (options.json === "") {
+    throw new Error("when specifying the json option you must specify a file");
+  }
+  if (options.json) {
+    loggers.push(new JsonLogger(options.json));
+  }
+  if (!options.quiet) {
+    loggers.push(new ConsoleLogger());
+  }
+  return new CompositeLogger(...loggers);
 }
 
 async function getConfig(path?: string): Promise<Config> {
@@ -55,67 +66,45 @@ async function getConfig(path?: string): Promise<Config> {
   }
 
   if (result.config == null || result.config.restrictions == null) {
-    throw new Error(
-      `config file found at "${result.filepath}" is missing key "restrictions"`,
-    );
+    throw new Error(`config file found at "${result.filepath}" is missing key "restrictions"`);
   }
 
   return result.config as Config;
 }
 
-function expandRestrictions(
-  restrictions: Restrictions,
-): Promise<ExpandedRestriction[]> {
-  const expandedRestrictions = Object.keys(restrictions).reduce<
-    Promise<ExpandedRestriction[]>
-  >(
+function evaluateRestrictions(restrictions: Restrictions): Promise<Result[]> {
+  return Object.keys(restrictions).reduce<Promise<Result[]>>(
     async (memo, path) => {
       const maxSize = bytes(restrictions[path]);
       const expandedRestriction = expandRestriction(path, maxSize);
       return [...(await memo), ...(await expandedRestriction)];
     },
-    Promise.resolve([]) as Promise<ExpandedRestriction[]>,
+    Promise.resolve([]) as Promise<Result[]>,
   );
-  return expandedRestrictions;
 }
 
-function expandRestriction(
-  path: string,
-  maxSize: number,
-): Promise<ExpandedRestriction[]> {
-  return new Promise<ExpandedRestriction[]>((resolve, reject) => {
+function expandRestriction(path: string, maxSize: number): Promise<Result[]> {
+  return new Promise<Result[]>((resolve, reject) => {
     glob(path, (err: any, matches: string[]) => {
       if (err != null) {
         reject(err);
         return;
       }
 
-      const expandedRestrictions = matches.map(async (match): Promise<
-        ExpandedRestriction
-      > => ({
-        path: match,
-        size: await getSize(match),
-        maxSize,
-      }));
+      const expandedRestrictions = matches.map(
+        async (match): Promise<Result> => ({
+          path: match,
+          size: await getSize(match),
+          maxSize,
+        }),
+      );
 
       resolve(Promise.all(expandedRestrictions));
     });
   });
 }
 
-function logRestriction(restriction: ExpandedRestriction): void {
-  const { path, size, maxSize } = restriction;
-  const message = isOverMaxSize(restriction)
-    ? chalk.red(`${path} ${bytes(size)} >= ${bytes(maxSize)}`)
-    : chalk.green(`${path} ${bytes(size)} < ${bytes(maxSize)}`);
-  // tslint:disable-next-line:no-console
-  console.log(message);
-}
-
-function isOverMaxSize(restriction: ExpandedRestriction): boolean {
-  const { size, maxSize } = restriction;
-  return size >= maxSize;
-}
+const isOverMaxSize = ({ size, maxSize }: Result): boolean => size >= maxSize;
 
 function getSize(path: string): Promise<number> {
   return new Promise((resolve, reject) => {

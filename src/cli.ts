@@ -13,7 +13,13 @@ const argv = yargs
     describe: "Suppress standard output",
     type: "boolean",
   })
-  .usage("Usage: $0 [--config=<pathToConfigFile>]")
+  .option("json", {
+    describe: "Output results to a JSON file",
+    type: "string",
+  })
+  .usage(
+    "Usage: $0 [--config=<pathToConfigFile>] [--quiet] [--json=<pathToResultsFile>]",
+  )
   .help()
   .wrap(null).argv;
 
@@ -22,6 +28,7 @@ const argv = yargs
     await tooBig({
       config: argv.config,
       quiet: argv.quiet,
+      json: argv.json,
     });
   } catch (err) {
     // tslint:disable-next-line:no-console
