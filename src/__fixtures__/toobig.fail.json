@@ -1,5 +1,5 @@
 {
   "restrictions": {
-    "src/*.ts": "2KB"
+    "src/*.ts": "0KB"
   }
 }

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`json logger .log with a failure result when finalized writes the correct results to the file 1`] = `
+Object {
+  "failures": Array [
+    Object {
+      "maxSize": 80,
+      "path": "bar",
+      "size": 100,
+    },
+  ],
+  "successes": Array [
+    Object {
+      "maxSize": 100,
+      "path": "foo",
+      "size": 80,
+    },
+  ],
+}
+`;
+
+exports[`json logger .log with only success results when finalized writes the correct results to the file 1`] = `
+Object {
+  "failures": Array [],
+  "successes": Array [
+    Object {
+      "maxSize": 100,
+      "path": "foo",
+      "size": 80,
+    },
+  ],
+}
+`;
