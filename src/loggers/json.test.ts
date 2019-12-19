@@ -1,14 +1,14 @@
-import { readFileSync, unlinkSync } from "fs";
+import { readFileSync, unlinkSync } from 'fs';
 
-import JsonLogger from "./json";
-import { Logger } from "./logger";
+import JsonLogger from './json';
+import { Logger } from './logger';
 
-describe("json logger", () => {
+describe('json logger', () => {
   let filename: string;
   let logger: Logger;
 
   beforeEach(() => {
-    filename = "test-file";
+    filename = 'test-file';
     logger = new JsonLogger(filename);
   });
 
@@ -16,38 +16,38 @@ describe("json logger", () => {
     unlinkSync(filename);
   });
 
-  describe(".log", () => {
-    describe("with a failure result", () => {
+  describe('.log', () => {
+    describe('with a failure result', () => {
       beforeEach(() => {
-        logger.log({ path: "foo", size: 80, maxSize: 100 });
-        logger.log({ path: "bar", size: 100, maxSize: 80 });
+        logger.log({ path: 'foo', size: 80, maxSize: 100 });
+        logger.log({ path: 'bar', size: 100, maxSize: 80 });
       });
 
-      describe("when finalized", () => {
+      describe('when finalized', () => {
         beforeEach(async () => {
           await logger.finalize();
         });
 
-        it("writes the correct results to the file", () => {
-          const contents = readFileSync(filename, "utf8");
+        it('writes the correct results to the file', () => {
+          const contents = readFileSync(filename, 'utf8');
           const results = JSON.parse(contents);
           expect(results).toMatchSnapshot();
         });
       });
     });
 
-    describe("with only success results", () => {
+    describe('with only success results', () => {
       beforeEach(() => {
-        logger.log({ path: "foo", size: 80, maxSize: 100 });
+        logger.log({ path: 'foo', size: 80, maxSize: 100 });
       });
 
-      describe("when finalized", () => {
+      describe('when finalized', () => {
         beforeEach(async () => {
           await logger.finalize();
         });
 
-        it("writes the correct results to the file", () => {
-          const contents = readFileSync(filename, "utf8");
+        it('writes the correct results to the file', () => {
+          const contents = readFileSync(filename, 'utf8');
           const results = JSON.parse(contents);
           expect(results).toMatchSnapshot();
         });

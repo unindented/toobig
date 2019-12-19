@@ -32,24 +32,25 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "bytes": "^3.0.0",
-    "chalk": "^2.3.0",
-    "cosmiconfig": "^4.0.0",
-    "get-folder-size": "^1.0.1",
-    "glob": "^7.1.2",
-    "yargs": "^10.1.1"
+    "bytes": "^3.1.0",
+    "chalk": "^3.0.0",
+    "cosmiconfig": "^6.0.0",
+    "get-folder-size": "^2.0.1",
+    "glob": "^7.1.6",
+    "yargs": "^15.0.2"
   },
   "devDependencies": {
-    "@types/bytes": "^2.5.1",
-    "@types/glob": "^5.0.34",
-    "@types/jest": "^24.0.11",
-    "@types/node": "^9.3.0",
-    "@types/yargs": "^10.0.1",
-    "jest": "^24.5.0",
-    "npm-run-all": "^4.1.2",
-    "rimraf": "^2.6.2",
-    "ts-jest": "24.0.0",
-    "tslint": "^5.14.0",
-    "typescript": "^3.3.3"
+    "@types/bytes": "^3.1.0",
+    "@types/glob": "^7.1.1",
+    "@types/jest": "^24.0.23",
+    "@types/yargs": "^13.0.3",
+    "jest": "^24.9.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.0",
+    "ts-jest": "24.2.0",
+    "tslint": "^5.20.1",
+    "tslint-consistent-codestyle": "^1.16.0",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "typescript": "^3.7.2"
   }
 }

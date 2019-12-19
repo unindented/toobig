@@ -1,18 +1,12 @@
-import bytes = require("bytes");
-import cosmiconfig = require("cosmiconfig");
-import getFolderSize = require("get-folder-size");
-import glob = require("glob");
+import bytes from 'bytes';
+import { cosmiconfigSync } from 'cosmiconfig';
+import getFolderSize from 'get-folder-size';
+import glob from 'glob';
 
-import {
-  CompositeLogger,
-  ConsoleLogger,
-  JsonLogger,
-  Logger,
-  Result,
-} from "./loggers";
+import { CompositeLogger, ConsoleLogger, JsonLogger, Logger, Result } from './loggers';
 
 // tslint:disable-next-line:no-var-requires
-const pkg = require("../package.json");
+const pkg = require('../package.json');
 
 export interface Options {
   config?: string;
@@ -39,14 +33,14 @@ export default async function tooBig(options: Options = {}): Promise<void> {
 
   const anyOverMaxSize = results.some(isOverMaxSize);
   if (anyOverMaxSize) {
-    throw new Error("some files are over their max size");
+    throw new Error('some files are over their max size');
   }
 }
 
 function createLogger(options: Options): Logger {
   const loggers: Logger[] = [];
-  if (options.json === "") {
-    throw new Error("when specifying the json option you must specify a file");
+  if (options.json === '') {
+    throw new Error('when specifying the json option you must specify a file');
   }
   if (options.json) {
     loggers.push(new JsonLogger(options.json));
@@ -58,14 +52,14 @@ function createLogger(options: Options): Logger {
 }
 
 async function getConfig(path?: string): Promise<Config> {
-  const explorer = cosmiconfig(pkg.name, { rcExtensions: true });
-  const result = await explorer.load(null, path);
+  const explorer = cosmiconfigSync(pkg.name, { rcExtensions: true });
+  const result = (path && explorer.load(path)) || explorer.search(path);
 
-  if (result == null) {
+  if (result === undefined) {
     throw new Error(`no config file found starting from "${process.cwd()}"`);
   }
 
-  if (result.config == null || result.config.restrictions == null) {
+  if (result.config === undefined || result.config.restrictions === undefined) {
     throw new Error(`config file found at "${result.filepath}" is missing key "restrictions"`);
   }
 
@@ -73,14 +67,12 @@ async function getConfig(path?: string): Promise<Config> {
 }
 
 function evaluateRestrictions(restrictions: Restrictions): Promise<Result[]> {
-  return Object.keys(restrictions).reduce<Promise<Result[]>>(
-    async (memo, path) => {
-      const maxSize = bytes(restrictions[path]);
-      const expandedRestriction = expandRestriction(path, maxSize);
-      return [...(await memo), ...(await expandedRestriction)];
-    },
-    Promise.resolve([]) as Promise<Result[]>,
-  );
+  return Object.keys(restrictions).reduce<Promise<Result[]>>(async (memo, path) => {
+    const maxSize = bytes(restrictions[path]);
+    const expandedRestriction = expandRestriction(path, maxSize);
+
+    return [...(await memo), ...(await expandedRestriction)];
+  }, Promise.resolve([]) as Promise<Result[]>);
 }
 
 function expandRestriction(path: string, maxSize: number): Promise<Result[]> {
@@ -96,7 +88,7 @@ function expandRestriction(path: string, maxSize: number): Promise<Result[]> {
           path: match,
           size: await getSize(match),
           maxSize,
-        }),
+        })
       );
 
       resolve(Promise.all(expandedRestrictions));

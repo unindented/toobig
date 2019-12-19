@@ -1,9 +1,56 @@
 {
-  "extends": ["tslint:latest"],
+  "extends": ["tslint:latest", "tslint-microsoft-contrib", "tslint-consistent-codestyle"],
   "rules": {
-    "arrow-parens": [true, "ban-single-arg-parens"],
+    "align": false,
+    "arrow-return-shorthand": [true, "multiline"],
+    "binary-expression-operand-order": false,
+    "completed-docs": false,
+    "export-name": false,
+    "import-name": false,
+    "insecure-random": false,
     "interface-name": [true, "never-prefix"],
-    "object-literal-sort-keys": false,
+    "linebreak-style": false,
+    "match-default-export-name": false,
+    "max-file-line-count": [true, 1500],
+    "max-line-length": [
+      true,
+      {
+        "limit": 120,
+        "ignore-pattern": "^import"
+      }
+    ],
+    "missing-jsdoc": false,
+    "newline-before-return": false,
+    "newline-per-chained-call": false,
+    "no-angle-bracket-type-assertion": true,
+    "no-any": false,
+    "no-backbone-get-set-outside-model": false,
+    "no-console": false,
+    "no-default-export": false,
+    "no-empty": false,
+    "no-floating-promises": false,
+    "no-http-string": false,
+    "no-implicit-dependencies": false,
+    "no-import-side-effect": false,
+    "no-non-null-assertion": false,
+    "no-null-keyword": false,
+    "no-unnecessary-else": true,
+    "no-relative-imports": false,
+    "no-reserved-keywords": false,
+    "no-require-imports": false,
+    "no-single-line-block-comment": false,
+    "no-string-throw": true,
+    "no-switch-case-fall-through": true,
+    "no-submodule-imports": false,
+    "no-unnecessary-callback-wrapper": false,
+    "no-unsafe-any": false,
+    "no-use-before-declare": false,
+    "no-var-requires": false,
+    "no-void-expression": [true, "ignore-arrow-function-shorthand"],
+    "non-literal-fs-path": false,
+    "non-literal-require": false,
+    "number-literal-format": false,
+    "object-literal-shorthand": true,
     "ordered-imports": [
       true,
       {
@@ -13,12 +60,27 @@
         "module-source-path": "full"
       }
     ],
-    "variable-name": [
+    "possible-timing-attack": false,
+    "prefer-array-literal": false,
+    "prefer-const": true,
+    "prefer-type-cast": false,
+    "promise-function-async": false,
+    "quotemark": [true, "single", "jsx-double", "avoid-escape"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "strict-boolean-expressions": false,
+    "trailing-comma": [
       true,
-      "ban-keywords",
-      "check-format",
-      "allow-leading-underscore",
-      "allow-pascal-case"
-    ]
+      {
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true
+      }
+    ],
+    "typedef": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"]
   }
 }

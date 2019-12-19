@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 
-import * as yargs from "yargs";
+import * as yargs from 'yargs';
 
-import tooBig from ".";
+import tooBig from '.';
 
 const argv = yargs
-  .option("config", {
-    describe: "Path to config file",
-    type: "string",
+  .option('config', {
+    describe: 'Path to config file',
+    type: 'string',
   })
-  .option("quiet", {
-    describe: "Suppress standard output",
-    type: "boolean",
+  .option('quiet', {
+    describe: 'Suppress standard output',
+    type: 'boolean',
   })
-  .option("json", {
-    describe: "Output results to a JSON file",
-    type: "string",
+  .option('json', {
+    describe: 'Output results to a JSON file',
+    type: 'string',
   })
   .usage(
-    "Usage: $0 [--config=<pathToConfigFile>] [--quiet] [--json=<pathToResultsFile>]",
+    'Usage: $0 [--config=<pathToConfigFile>] [--quiet] [--json=<pathToResultsFile>]'
   )
   .help()
   .wrap(null).argv;

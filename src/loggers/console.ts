@@ -1,7 +1,7 @@
-import bytes = require("bytes");
-import chalk from "chalk";
+import bytes from 'bytes';
+import chalk from 'chalk';
 
-import { Logger, Result } from "./logger";
+import { Logger, Result } from './logger';
 
 const isOverMaxSize = ({ size, maxSize }: Result): boolean => size >= maxSize;
 
