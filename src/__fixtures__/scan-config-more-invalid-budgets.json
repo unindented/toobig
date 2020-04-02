@@ -1,0 +1,6 @@
+{
+  "budgets": {
+    "foo.js": 2,
+    "bar.js": []
+  }
+}

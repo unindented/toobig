@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JUnitReporter with default options with all results under budget writes to output stream with results 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<testsuites name=\\"toobig test suites\\" tests=\\"2\\" failures=\\"0\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"2\\" failures=\\"0\\">
+    <testcase name=\\"foo/bar.js\\" classname=\\"foo/bar.js\\">
+    </testcase>
+    <testcase name=\\"foo/baz.js\\" classname=\\"foo/baz.js\\">
+    </testcase>
+  </testsuite>
+</testsuites>
+"
+`;
+
+exports[`JUnitReporter with default options with multiple results over budget writes to output stream with results 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<testsuites name=\\"toobig test suites\\" tests=\\"4\\" failures=\\"3\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"4\\" failures=\\"3\\">
+    <testcase name=\\"foo/bar.js\\" classname=\\"foo/bar.js\\">
+    </testcase>
+    <testcase name=\\"foo/baz.js\\" classname=\\"foo/baz.js\\">
+      <failure message=\\"4.13KB &gt;= 4KB\\">Entry over budget: 4.13KB &gt;= 4KB</failure>
+    </testcase>
+    <testcase name=\\"foo/qux.js\\" classname=\\"foo/qux.js\\">
+      <failure message=\\"4.16KB &gt;= 4KB\\">Entry over budget: 4.16KB &gt;= 4KB</failure>
+    </testcase>
+    <testcase name=\\"foo/quux.js\\" classname=\\"foo/quux.js\\">
+      <failure message=\\"4.13KB &gt;= 4KB\\">Entry over budget: 4.13KB &gt;= 4KB</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
+"
+`;
+
+exports[`JUnitReporter with default options with no results writes to output stream with results 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<testsuites name=\\"toobig test suites\\" tests=\\"0\\" failures=\\"0\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"0\\" failures=\\"0\\">
+  </testsuite>
+</testsuites>
+"
+`;
+
+exports[`JUnitReporter with default options with one result over budget writes to output stream with results 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<testsuites name=\\"toobig test suites\\" tests=\\"2\\" failures=\\"1\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"2\\" failures=\\"1\\">
+    <testcase name=\\"foo/bar.js\\" classname=\\"foo/bar.js\\">
+    </testcase>
+    <testcase name=\\"foo/baz.js\\" classname=\\"foo/baz.js\\">
+      <failure message=\\"4.13KB &gt;= 4KB\\">Entry over budget: 4.13KB &gt;= 4KB</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
+"
+`;
+
+exports[`JUnitReporter with output stream with all results under budget writes to output stream with results 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<testsuites name=\\"toobig test suites\\" tests=\\"2\\" failures=\\"0\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"2\\" failures=\\"0\\">
+    <testcase name=\\"foo/bar.js\\" classname=\\"foo/bar.js\\">
+    </testcase>
+    <testcase name=\\"foo/baz.js\\" classname=\\"foo/baz.js\\">
+    </testcase>
+  </testsuite>
+</testsuites>
+"
+`;
+
+exports[`JUnitReporter with output stream with multiple results over budget writes to output stream with results 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<testsuites name=\\"toobig test suites\\" tests=\\"4\\" failures=\\"3\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"4\\" failures=\\"3\\">
+    <testcase name=\\"foo/bar.js\\" classname=\\"foo/bar.js\\">
+    </testcase>
+    <testcase name=\\"foo/baz.js\\" classname=\\"foo/baz.js\\">
+      <failure message=\\"4.13KB &gt;= 4KB\\">Entry over budget: 4.13KB &gt;= 4KB</failure>
+    </testcase>
+    <testcase name=\\"foo/qux.js\\" classname=\\"foo/qux.js\\">
+      <failure message=\\"4.16KB &gt;= 4KB\\">Entry over budget: 4.16KB &gt;= 4KB</failure>
+    </testcase>
+    <testcase name=\\"foo/quux.js\\" classname=\\"foo/quux.js\\">
+      <failure message=\\"4.13KB &gt;= 4KB\\">Entry over budget: 4.13KB &gt;= 4KB</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
+"
+`;
+
+exports[`JUnitReporter with output stream with no results writes to output stream with results 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<testsuites name=\\"toobig test suites\\" tests=\\"0\\" failures=\\"0\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"0\\" failures=\\"0\\">
+  </testsuite>
+</testsuites>
+"
+`;
+
+exports[`JUnitReporter with output stream with one result over budget writes to output stream with results 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<testsuites name=\\"toobig test suites\\" tests=\\"2\\" failures=\\"1\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"2\\" failures=\\"1\\">
+    <testcase name=\\"foo/bar.js\\" classname=\\"foo/bar.js\\">
+    </testcase>
+    <testcase name=\\"foo/baz.js\\" classname=\\"foo/baz.js\\">
+      <failure message=\\"4.13KB &gt;= 4KB\\">Entry over budget: 4.13KB &gt;= 4KB</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
+"
+`;

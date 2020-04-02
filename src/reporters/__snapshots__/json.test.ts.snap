@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSONReporter with default options with all results under budget writes to output stream with results 1`] = `
+"[
+  {
+    \\"path\\": \\"foo/bar.js\\",
+    \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/baz.js\\",
+    \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  }
+]
+"
+`;
+
+exports[`JSONReporter with default options with multiple results over budget writes to output stream with results 1`] = `
+"[
+  {
+    \\"path\\": \\"foo/bar.js\\",
+    \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/baz.js\\",
+    \\"size\\": 4224,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/qux.js\\",
+    \\"size\\": 4256,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/quux.js\\",
+    \\"size\\": 4224,
+    \\"maxSize\\": 4096
+  }
+]
+"
+`;
+
+exports[`JSONReporter with default options with no results writes to output stream with results 1`] = `
+"[]
+"
+`;
+
+exports[`JSONReporter with default options with one result over budget writes to output stream with results 1`] = `
+"[
+  {
+    \\"path\\": \\"foo/bar.js\\",
+    \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/baz.js\\",
+    \\"size\\": 4224,
+    \\"maxSize\\": 4096
+  }
+]
+"
+`;
+
+exports[`JSONReporter with output stream with all results under budget writes to output stream with results 1`] = `
+"[
+  {
+    \\"path\\": \\"foo/bar.js\\",
+    \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/baz.js\\",
+    \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  }
+]
+"
+`;
+
+exports[`JSONReporter with output stream with multiple results over budget writes to output stream with results 1`] = `
+"[
+  {
+    \\"path\\": \\"foo/bar.js\\",
+    \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/baz.js\\",
+    \\"size\\": 4224,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/qux.js\\",
+    \\"size\\": 4256,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/quux.js\\",
+    \\"size\\": 4224,
+    \\"maxSize\\": 4096
+  }
+]
+"
+`;
+
+exports[`JSONReporter with output stream with no results writes to output stream with results 1`] = `
+"[]
+"
+`;
+
+exports[`JSONReporter with output stream with one result over budget writes to output stream with results 1`] = `
+"[
+  {
+    \\"path\\": \\"foo/bar.js\\",
+    \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  },
+  {
+    \\"path\\": \\"foo/baz.js\\",
+    \\"size\\": 4224,
+    \\"maxSize\\": 4096
+  }
+]
+"
+`;

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scan with \`--help\` shows help output 1`] = `
+"toobig scan [options]
+
+Scan current working directory to check for entries over budget, and report them
+
+Command options:
+  --budgets    Budgets to apply when scanning                 [array] [required]
+  --cwd        Current working directory to scan         [string] [default: \\".\\"]
+  --reporters  Reporters to process results                              [array]
+  --config     Config file, or directory to search for one
+                                                         [string] [default: \\".\\"]
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]
+
+Examples:
+  toobig scan
+  toobig scan --config myconfig.json
+  toobig scan --budgets \\"dist/*.js\\" 4KB --budgets \\"dist/*.css\\" 2KB
+  toobig scan --reporters table summary
+  toobig scan --reporters json | toobig load
+
+For more details, please see: https://github.com/unindented/toobig"
+`;

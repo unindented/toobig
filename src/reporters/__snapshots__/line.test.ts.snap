@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LineReporter with default options with all results under budget writes to output stream with results 1`] = `
+"[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mfoo/[22m[1mbar.js[22m [2m3.97KB < 4KB[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mfoo/[22m[1mbaz.js[22m [2m3.97KB < 4KB[22m
+
+"
+`;
+
+exports[`LineReporter with default options with multiple results over budget writes to output stream with results 1`] = `
+"[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mfoo/[22m[1mbar.js[22m [2m3.97KB < 4KB[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mfoo/[22m[1mbaz.js[22m [1m[31m4.13KB >= 4KB[39m[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mfoo/[22m[1mqux.js[22m [1m[31m4.16KB >= 4KB[39m[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mfoo/[22m[1mquux.js[22m [1m[31m4.13KB >= 4KB[39m[22m
+
+"
+`;
+
+exports[`LineReporter with default options with no results writes to output stream with results 1`] = `
+"
+"
+`;
+
+exports[`LineReporter with default options with one result over budget writes to output stream with results 1`] = `
+"[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mfoo/[22m[1mbar.js[22m [2m3.97KB < 4KB[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mfoo/[22m[1mbaz.js[22m [1m[31m4.13KB >= 4KB[39m[22m
+
+"
+`;
+
+exports[`LineReporter with output stream with all results under budget writes to output stream with results 1`] = `
+"[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mfoo/[22m[1mbar.js[22m [2m3.97KB < 4KB[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mfoo/[22m[1mbaz.js[22m [2m3.97KB < 4KB[22m
+
+"
+`;
+
+exports[`LineReporter with output stream with multiple results over budget writes to output stream with results 1`] = `
+"[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mfoo/[22m[1mbar.js[22m [2m3.97KB < 4KB[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mfoo/[22m[1mbaz.js[22m [1m[31m4.13KB >= 4KB[39m[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mfoo/[22m[1mqux.js[22m [1m[31m4.16KB >= 4KB[39m[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mfoo/[22m[1mquux.js[22m [1m[31m4.13KB >= 4KB[39m[22m
+
+"
+`;
+
+exports[`LineReporter with output stream with no results writes to output stream with results 1`] = `
+"
+"
+`;
+
+exports[`LineReporter with output stream with one result over budget writes to output stream with results 1`] = `
+"[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mfoo/[22m[1mbar.js[22m [2m3.97KB < 4KB[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mfoo/[22m[1mbaz.js[22m [1m[31m4.13KB >= 4KB[39m[22m
+
+"
+`;
+
+exports[`LineReporter without color with all results under budget writes to output stream with results 1`] = `
+"PASS foo/bar.js 3.97KB < 4KB
+PASS foo/baz.js 3.97KB < 4KB
+
+"
+`;
+
+exports[`LineReporter without color with multiple results over budget writes to output stream with results 1`] = `
+"PASS foo/bar.js 3.97KB < 4KB
+FAIL foo/baz.js 4.13KB >= 4KB
+FAIL foo/qux.js 4.16KB >= 4KB
+FAIL foo/quux.js 4.13KB >= 4KB
+
+"
+`;
+
+exports[`LineReporter without color with no results writes to output stream with results 1`] = `
+"
+"
+`;
+
+exports[`LineReporter without color with one result over budget writes to output stream with results 1`] = `
+"PASS foo/bar.js 3.97KB < 4KB
+FAIL foo/baz.js 4.13KB >= 4KB
+
+"
+`;

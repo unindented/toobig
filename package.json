@@ -1,0 +1,81 @@
+{
+  "name": "toobig",
+  "description": "Check file and directory sizes against a budget.",
+  "version": "0.0.0-development",
+  "license": "MIT",
+  "homepage": "https://github.com/unindented/toobig",
+  "author": {
+    "name": "Daniel Perez Alvarez",
+    "email": "unindented@gmail.com",
+    "url": "http://unindented.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unindented/toobig.git"
+  },
+  "bin": {
+    "toobig": "dist/cli/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
+  },
+  "scripts": {
+    "clean:coverage": "rimraf coverage",
+    "clean:dist": "rimraf dist",
+    "clean": "run-p clean:*",
+    "build:dist": "tsc --build tsconfig.dist.json",
+    "build:chmod": "chmod +x dist/cli/index.js",
+    "build": "run-s clean build:*",
+    "test:lint": "eslint --ext .js,.ts .",
+    "test:unit": "jest --coverage --config config/jest/config.json",
+    "test": "run-s test:*",
+    "watch:unit": "npm run test:unit -- --watch",
+    "watch:build": "npm run build:dist -- --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "axios": "^0.19.2",
+    "bytes": "^3.1.0",
+    "chalk": "^4.0.0",
+    "cosmiconfig": "^6.0.0",
+    "fast-glob": "^3.2.2",
+    "fs-extra": "^9.0.0",
+    "get-folder-size": "^2.0.1",
+    "lodash": "^4.17.15",
+    "table": "^5.4.6",
+    "terminal-link": "^2.1.1",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "@types/bytes": "^3.1.0",
+    "@types/fs-extra": "^8.1.0",
+    "@types/get-folder-size": "^2.0.0",
+    "@types/hapi__joi": "^16.0.12",
+    "@types/jest": "^25.1.5",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^10.17.17",
+    "@types/table": "^5.0.0",
+    "@types/yargs": "^15.0.4",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-jest-formatting": "^1.2.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.2.6",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.3.0",
+    "typescript": "^3.8.3"
+  }
+}

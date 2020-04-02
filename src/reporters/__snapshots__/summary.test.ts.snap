@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryReporter with default options with all results under budget writes to output stream with results 1`] = `""`;
+
+exports[`SummaryReporter with default options with multiple results over budget writes to output stream with results 1`] = `
+"[1mSummary[22m
+[1m[31m › 3 entries over budget[39m[22m
+   ↳   • [2mfoo/[22m[1mbaz.js[22m [2m4.13KB >= 4KB[22m
+       • [2mfoo/[22m[1mqux.js[22m [2m4.16KB >= 4KB[22m
+       • [2mfoo/[22m[1mquux.js[22m [2m4.13KB >= 4KB[22m
+
+"
+`;
+
+exports[`SummaryReporter with default options with no results writes to output stream with results 1`] = `""`;
+
+exports[`SummaryReporter with default options with one result over budget writes to output stream with results 1`] = `
+"[1mSummary[22m
+[1m[31m › 1 entry over budget[39m[22m
+   ↳   • [2mfoo/[22m[1mbaz.js[22m [2m4.13KB >= 4KB[22m
+
+"
+`;
+
+exports[`SummaryReporter with output stream with all results under budget writes to output stream with results 1`] = `""`;
+
+exports[`SummaryReporter with output stream with multiple results over budget writes to output stream with results 1`] = `
+"[1mSummary[22m
+[1m[31m › 3 entries over budget[39m[22m
+   ↳   • [2mfoo/[22m[1mbaz.js[22m [2m4.13KB >= 4KB[22m
+       • [2mfoo/[22m[1mqux.js[22m [2m4.16KB >= 4KB[22m
+       • [2mfoo/[22m[1mquux.js[22m [2m4.13KB >= 4KB[22m
+
+"
+`;
+
+exports[`SummaryReporter with output stream with no results writes to output stream with results 1`] = `""`;
+
+exports[`SummaryReporter with output stream with one result over budget writes to output stream with results 1`] = `
+"[1mSummary[22m
+[1m[31m › 1 entry over budget[39m[22m
+   ↳   • [2mfoo/[22m[1mbaz.js[22m [2m4.13KB >= 4KB[22m
+
+"
+`;
+
+exports[`SummaryReporter without color with all results under budget writes to output stream with results 1`] = `""`;
+
+exports[`SummaryReporter without color with multiple results over budget writes to output stream with results 1`] = `
+"Summary
+ › 3 entries over budget
+   ↳   • foo/baz.js 4.13KB >= 4KB
+       • foo/qux.js 4.16KB >= 4KB
+       • foo/quux.js 4.13KB >= 4KB
+
+"
+`;
+
+exports[`SummaryReporter without color with no results writes to output stream with results 1`] = `""`;
+
+exports[`SummaryReporter without color with one result over budget writes to output stream with results 1`] = `
+"Summary
+ › 1 entry over budget
+   ↳   • foo/baz.js 4.13KB >= 4KB
+
+"
+`;

@@ -1,0 +1,12 @@
+[
+  {
+    "path": "foo/bar.js",
+    "size": 4064,
+    "maxSize": 4096
+  },
+  {
+    "path": "foo/baz.js",
+    "size": 4224,
+    "maxSize": 4096
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "budgets": {
+    "dist/**/*.js": "4KB",
+    "dist": "32KB"
+  },
+  "reporters": [
+    "default",
+    [
+      "table",
+      {
+        "template": "markdown",
+        "color": false,
+        "output": "toobig/report.md"
+      }
+    ],
+    [
+      "json",
+      {
+        "output": "toobig/report.json"
+      }
+    ],
+    [
+      "junit",
+      {
+        "output": "toobig/report.xml"
+      }
+    ],
+    [
+      "tap",
+      {
+        "output": "toobig/report.txt"
+      }
+    ]
+  ]
+}

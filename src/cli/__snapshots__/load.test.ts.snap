@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`load with \`--help\` shows help output 1`] = `
+"toobig load [options]
+
+Load results from input file, and report them
+
+Command options:
+  --input      Input file                            [string] [default: \\"stdin\\"]
+  --reporters  Reporters to process results                              [array]
+  --config     Config file, or directory to search for one
+                                                         [string] [default: \\".\\"]
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]
+
+Examples:
+  toobig load results.json --reporters table summary
+  toobig load --input results.json
+  toobig load --input results.json --config myconfig.json
+  toobig load --input results.json --reporters table summary
+  toobig load < results.json
+  toobig scan --reporters json | toobig load
+
+For more details, please see: https://github.com/unindented/toobig"
+`;

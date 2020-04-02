@@ -1,0 +1,7 @@
+{
+  "budgets": {
+    "foo.js": "1KB",
+    "bar.js": "2KB"
+  },
+  "reporters": ["summary", ["custom", { "banana": "yes", "pineapple": "no" }]]
+}

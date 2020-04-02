@@ -1,0 +1,18 @@
+{
+  "rootDir": "../..",
+  "cacheDirectory": "<rootDir>/.jest",
+  "clearMocks": true,
+  "modulePaths": ["<rootDir>/src"],
+  "modulePathIgnorePatterns": ["<rootDir>/coverage", "<rootDir>/dist"],
+  "preset": "ts-jest",
+  "setupFilesAfterEnv": ["<rootDir>/config/jest/setup.ts"],
+  "coverageReporters": ["text", "text-summary", "html"],
+  "coverageThreshold": {
+    "global": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100
+    }
+  }
+}
