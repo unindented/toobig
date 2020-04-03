@@ -1,3 +1,5 @@
+import { Results } from "../types";
+
 import { reportersConfigSchema, resultsConfigSchema } from "./shared";
 
 describe("reportersConfigSchema", () => {
@@ -11,10 +13,10 @@ describe("reportersConfigSchema", () => {
 
 describe("resultsConfigSchema", () => {
   it("accepts a valid config", () => {
-    const results = [
-      { path: "foo/bar.js", size: 4064, maxSize: 4096 },
-      { path: "foo/baz.js", size: 4064, maxSize: 4096 },
-    ];
+    const results: Results = {
+      "foo/bar.js": { path: "foo/bar.js", size: 4064, maxSize: 4096 },
+      "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
+    };
     const { error } = resultsConfigSchema.validate(results);
 
     expect(error).toBeUndefined();

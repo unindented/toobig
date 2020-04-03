@@ -6,7 +6,14 @@ import getFolderSize from "get-folder-size";
 
 import { scanConfigSchema } from "../schemas";
 import { isOverBudget } from "../shared";
-import { BudgetsConfig, Result, ReturnValue, ScanConfig } from "../types";
+import {
+  BudgetsConfig,
+  Result,
+  Results,
+  ReturnValue,
+  ScanConfig,
+  WritableResults,
+} from "../types";
 
 import { getCompositeReporter, reportResults } from "./shared";
 
@@ -21,7 +28,7 @@ export const scanAndReport = async (
   const results = await scanResults({ budgets, cwd });
   await reportResults({ results, reporter: compositeReporter });
 
-  const anyOverBudget = results.some(isOverBudget);
+  const anyOverBudget = Object.values(results).some(isOverBudget);
   return { results, anyOverBudget };
 };
 
@@ -31,21 +38,23 @@ const scanResults = async ({
 }: {
   budgets: BudgetsConfig;
   cwd: string;
-}): Promise<readonly Result[]> => {
-  const results: Result[] = [];
+}): Promise<Results> => {
+  const results: WritableResults = {};
 
   for (const budget of Object.keys(budgets)) {
     const maxSize = bytes(budgets[budget]);
     const paths = await glob(budget, { cwd, onlyFiles: false });
 
     for (const path of paths) {
-      const result = {
+      const result: Result = {
         path: path.toString(),
         size: await getSize(resolve(cwd, path.toString())),
         maxSize,
       };
 
-      results.push(result);
+      if (results[path] == null || results[path].maxSize > maxSize) {
+        results[path] = result;
+      }
     }
   }
 

@@ -1,7 +1,7 @@
 import { resolve } from "path";
 
 import { CompositeReporter } from "../reporters";
-import { Reporter } from "../types";
+import { Reporter, Results } from "../types";
 
 import { getCompositeReporter, reportResults } from "./shared";
 
@@ -18,10 +18,10 @@ describe(".getCompositeReporter", () => {
 });
 
 describe(".reportResults", () => {
-  const results = [
-    { path: "foo/bar.js", size: 4064, maxSize: 4096 },
-    { path: "foo/baz.js", size: 4064, maxSize: 4096 },
-  ];
+  const results: Results = {
+    "foo/bar.js": { path: "foo/bar.js", size: 4064, maxSize: 4096 },
+    "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
+  };
 
   let mockReporter: Reporter;
 

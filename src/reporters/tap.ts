@@ -1,7 +1,7 @@
 import template from "lodash/template";
 
 import { endOutputStream, getOutputContext, getOutputStream } from "../shared";
-import { OutputContext, OutputStream, Reporter, Result } from "../types";
+import { OutputContext, OutputStream, Reporter, Results } from "../types";
 
 import { formatSizeVsMaxSize, isOverBudget } from "./shared";
 
@@ -26,15 +26,18 @@ export default class TAPReporter implements Reporter {
     return;
   }
 
-  public onRunComplete(results: readonly Result[]): void {
-    if (results.length === 0) {
+  public onRunComplete(results: Results): void {
+    const values = Object.values(results);
+    const valuesOverBudget = values.filter(isOverBudget);
+
+    if (values.length === 0) {
       return;
     }
 
     const data = {
-      totalCount: results.length,
-      failedCount: results.filter(isOverBudget).length,
-      results: results.map((result) => ({
+      totalCount: values.length,
+      failedCount: valuesOverBudget.length,
+      results: values.map((result) => ({
         ...result,
         isOverBudget: isOverBudget(result),
         message: formatSizeVsMaxSize(result, this.outputContext),

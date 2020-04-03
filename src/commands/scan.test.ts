@@ -17,7 +17,8 @@ import { getCompositeReporter } from "./shared";
 
 describe(".scanAndReport", () => {
   const budgets: BudgetsConfig = {
-    "**/*.js": "4KB",
+    "foo/*.js": "4KB",
+    "**/*.js": "8KB",
   };
 
   let promise: Promise<ReturnValue>;
@@ -43,22 +44,22 @@ describe(".scanAndReport", () => {
 
     it("resolves with results", async () => {
       await expect(promise).resolves.toMatchInlineSnapshot(`
-        Object {
-          "anyOverBudget": false,
-          "results": Array [
-            Object {
-              "maxSize": 4096,
-              "path": "foo/bar.js",
-              "size": 4064,
-            },
-            Object {
-              "maxSize": 4096,
-              "path": "foo/baz.js",
-              "size": 4064,
-            },
-          ],
-        }
-      `);
+              Object {
+                "anyOverBudget": false,
+                "results": Object {
+                  "foo/bar.js": Object {
+                    "maxSize": 4096,
+                    "path": "foo/bar.js",
+                    "size": 4064,
+                  },
+                  "foo/baz.js": Object {
+                    "maxSize": 4096,
+                    "path": "foo/baz.js",
+                    "size": 4064,
+                  },
+                },
+              }
+            `);
     });
 
     it("calls `reporter.onRunStart` once", async () => {

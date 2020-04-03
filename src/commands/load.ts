@@ -1,6 +1,6 @@
 import { loadConfigSchema } from "../schemas";
 import { getInputStream, isOverBudget, readInputStream } from "../shared";
-import { LoadConfig, Result, ReturnValue } from "../types";
+import { LoadConfig, Results, ReturnValue } from "../types";
 
 import { getCompositeReporter, reportResults } from "./shared";
 
@@ -15,20 +15,20 @@ export const loadAndReport = async (
   const results = await loadResults({ input });
   await reportResults({ results, reporter: compositeReporter });
 
-  const anyOverBudget = results.some(isOverBudget);
+  const anyOverBudget = Object.values(results).some(isOverBudget);
   return { results, anyOverBudget };
 };
 
 const loadResults = async ({
   input,
 }: {
-  input: string | readonly Result[];
-}): Promise<readonly Result[]> => {
+  input: string | Results;
+}): Promise<Results> => {
   if (typeof input !== "string") {
     return input;
   }
 
   const stream = await getInputStream(input);
   const contents = await readInputStream(stream);
-  return JSON.parse(contents) as readonly Result[];
+  return JSON.parse(contents) as Results;
 };

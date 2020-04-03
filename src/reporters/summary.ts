@@ -1,5 +1,11 @@
 import { endOutputStream, getOutputContext, getOutputStream } from "../shared";
-import { OutputContext, OutputStream, Reporter, Result } from "../types";
+import {
+  OutputContext,
+  OutputStream,
+  Reporter,
+  Result,
+  Results,
+} from "../types";
 
 import {
   formatPath,
@@ -33,22 +39,23 @@ export default class SummaryReporter implements Reporter {
     return;
   }
 
-  public onRunComplete(results: readonly Result[]): void {
+  public onRunComplete(results: Results): void {
     const { colors } = this.outputContext;
 
-    const resultsOverMaxSize = results.filter(isOverBudget);
+    const values = Object.values(results);
+    const valuesOverBudget = values.filter(isOverBudget);
 
-    if (resultsOverMaxSize.length === 0) {
+    if (valuesOverBudget.length === 0) {
       return;
     }
 
     const header = colors.bold("Summary");
     const summary = colors.bold.red(
-      `${arrow}${resultsOverMaxSize.length.toString()} ${
-        resultsOverMaxSize.length === 1 ? "entry" : "entries"
+      `${arrow}${valuesOverBudget.length.toString()} ${
+        valuesOverBudget.length === 1 ? "entry" : "entries"
       } over budget`
     );
-    const details = getDetails(resultsOverMaxSize, this.outputContext);
+    const details = getDetails(valuesOverBudget, this.outputContext);
 
     this.outputStream.write(
       [header, summary, ...details, ""].join("\n") + "\n"
@@ -65,7 +72,7 @@ const getDetails = (
   results: readonly Result[],
   outputContext: OutputContext
 ): readonly string[] => {
-  const detailsContext = {
+  const detailsContext: OutputContext = {
     colors: outputContext.colors,
     colorOverride: outputContext.colors.dim,
   };

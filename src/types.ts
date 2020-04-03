@@ -10,7 +10,7 @@ export interface ScanConfig extends CommonConfig {
 }
 
 export interface LoadConfig extends CommonConfig {
-  readonly input: string | readonly Result[];
+  readonly input: string | Results;
 }
 
 export interface BudgetsConfig {
@@ -19,6 +19,16 @@ export interface BudgetsConfig {
 
 export type ReporterConfig = string | readonly [string, object];
 
+export interface Results {
+  readonly [path: string]: Result;
+}
+
+type Writable<T> = {
+  -readonly [K in keyof T]: T[K];
+};
+
+export type WritableResults = Writable<Results>;
+
 export interface Result {
   readonly path: string;
   readonly size: number;
@@ -26,7 +36,7 @@ export interface Result {
 }
 
 export interface ReturnValue {
-  readonly results: readonly Result[];
+  readonly results: Results;
   readonly anyOverBudget: boolean;
 }
 
@@ -37,7 +47,7 @@ export interface ReporterConstructor {
 export interface Reporter {
   onRunStart(): Promise<void> | void;
   onResult(result: Result): Promise<void> | void;
-  onRunComplete(results: readonly Result[]): Promise<void> | void;
+  onRunComplete(results: Results): Promise<void> | void;
 }
 
 export interface OutputContext {

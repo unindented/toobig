@@ -6,15 +6,16 @@ jest.mock("../shared", () => ({
 
 import { Writable } from "stream";
 
+import { reportResults } from "../commands/shared";
 import { getOutputStream } from "../shared";
-import { Reporter, Result } from "../types";
+import { Reporter, Results } from "../types";
 
 import { SummaryReporter } from ".";
 
-const noResults: readonly Result[] = [];
-const resultsMultipleOver = require("../__fixtures__/results-multiple-over.json") as readonly Result[];
-const resultsOneOver = require("../__fixtures__/results-one-over.json") as readonly Result[];
-const resultsUnder = require("../__fixtures__/results-under.json") as readonly Result[];
+const noResults: Results = {};
+const resultsMultipleOver = require("../__fixtures__/results-multiple-over.json") as Results;
+const resultsOneOver = require("../__fixtures__/results-one-over.json") as Results;
+const resultsUnder = require("../__fixtures__/results-under.json") as Results;
 
 describe("SummaryReporter", () => {
   let reporter: Reporter;
@@ -47,11 +48,7 @@ describe("SummaryReporter", () => {
       ["with no results", noResults],
     ])("%s", (_desc, results) => {
       beforeEach(async () => {
-        await reporter.onRunStart();
-        for (const result of results) {
-          await reporter.onResult(result);
-        }
-        await reporter.onRunComplete(results);
+        await reportResults({ results, reporter });
       });
 
       it("writes to output stream with results", () => {

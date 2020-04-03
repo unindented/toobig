@@ -1,22 +1,22 @@
-[
-  {
+{
+  "foo/bar.js": {
     "path": "foo/bar.js",
     "size": 4064,
     "maxSize": 4096
   },
-  {
+  "foo/baz.js": {
     "path": "foo/baz.js",
     "size": 4224,
     "maxSize": 4096
   },
-  {
+  "foo/qux.js": {
     "path": "foo/qux.js",
     "size": 4256,
     "maxSize": 4096
   },
-  {
+  "foo/quux.js": {
     "path": "foo/quux.js",
     "size": 4224,
     "maxSize": 4096
   }
-]
+}

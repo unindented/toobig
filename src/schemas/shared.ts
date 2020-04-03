@@ -7,7 +7,8 @@ export const reportersConfigSchema = Joi.array().items(
   )
 );
 
-export const resultsConfigSchema = Joi.array().items(
+export const resultsConfigSchema = Joi.object().pattern(
+  /.+/,
   Joi.object({
     path: Joi.string().required(),
     size: Joi.number().required(),

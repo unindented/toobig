@@ -14,17 +14,17 @@ import { Readable } from "stream";
 import noop from "lodash/noop";
 
 import { getInputStream } from "../shared";
-import { Reporter, ReturnValue } from "../types";
+import { Reporter, Results, ReturnValue } from "../types";
 
 import { loadAndReport } from "./load";
 import { getCompositeReporter } from "./shared";
 
 describe(".loadAndReport", () => {
   const input = "results.json";
-  const results = [
-    { path: "foo/bar.js", size: 4064, maxSize: 4096 },
-    { path: "foo/baz.js", size: 4064, maxSize: 4096 },
-  ];
+  const results: Results = {
+    "foo/bar.js": { path: "foo/bar.js", size: 4064, maxSize: 4096 },
+    "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
+  };
 
   let promise: Promise<ReturnValue>;
   let mockReporter: Reporter;
@@ -45,22 +45,22 @@ describe(".loadAndReport", () => {
 
     it("resolves with results", async () => {
       await expect(promise).resolves.toMatchInlineSnapshot(`
-        Object {
-          "anyOverBudget": false,
-          "results": Array [
-            Object {
-              "maxSize": 4096,
-              "path": "foo/bar.js",
-              "size": 4064,
-            },
-            Object {
-              "maxSize": 4096,
-              "path": "foo/baz.js",
-              "size": 4064,
-            },
-          ],
-        }
-      `);
+              Object {
+                "anyOverBudget": false,
+                "results": Object {
+                  "foo/bar.js": Object {
+                    "maxSize": 4096,
+                    "path": "foo/bar.js",
+                    "size": 4064,
+                  },
+                  "foo/baz.js": Object {
+                    "maxSize": 4096,
+                    "path": "foo/baz.js",
+                    "size": 4064,
+                  },
+                },
+              }
+            `);
     });
 
     it("calls `reporter.onRunStart` once", async () => {
@@ -97,22 +97,22 @@ describe(".loadAndReport", () => {
 
       it("resolves with results", async () => {
         await expect(promise).resolves.toMatchInlineSnapshot(`
-        Object {
-          "anyOverBudget": false,
-          "results": Array [
-            Object {
-              "maxSize": 4096,
-              "path": "foo/bar.js",
-              "size": 4064,
-            },
-            Object {
-              "maxSize": 4096,
-              "path": "foo/baz.js",
-              "size": 4064,
-            },
-          ],
-        }
-      `);
+                        Object {
+                          "anyOverBudget": false,
+                          "results": Array [
+                            Object {
+                              "maxSize": 4096,
+                              "path": "foo/bar.js",
+                              "size": 4064,
+                            },
+                            Object {
+                              "maxSize": 4096,
+                              "path": "foo/baz.js",
+                              "size": 4064,
+                            },
+                          ],
+                        }
+                    `);
       });
 
       it("calls `reporter.onRunStart` once", async () => {

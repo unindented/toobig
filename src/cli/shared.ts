@@ -1,10 +1,11 @@
 import { cosmiconfigSync } from "cosmiconfig";
 import { existsSync, lstatSync } from "fs-extra";
+import { ParserConfigurationOptions } from "yargs";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pkg = require("../../package.json") as { name: string };
 
-export const parserConfiguration = {
+export const parserConfiguration: ParserConfigurationOptions = {
   "boolean-negation": true,
   "camel-case-expansion": false,
   "combine-arrays": false,
@@ -17,6 +18,7 @@ export const parserConfiguration = {
   "populate--": false,
   "set-placeholder-key": false,
   "short-option-groups": false,
+  "sort-commands": false,
   "strip-aliased": false,
   "strip-dashed": false,
   "unknown-options-as-args": false,

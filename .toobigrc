@@ -1,6 +1,7 @@
 {
   "budgets": {
     "dist/**/*.js": "4KB",
+    "dist/cli/*.js": "8KB",
     "dist": "32KB"
   },
   "reporters": [

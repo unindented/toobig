@@ -22,7 +22,7 @@ describe("loadConfigSchema", () => {
     const { error } = loadConfigSchema.validate(config);
 
     expect(error).toMatchInlineSnapshot(
-      `[ValidationError: "input" must be one of [string, array]]`
+      `[ValidationError: "input" must be one of [string, object]]`
     );
   });
 

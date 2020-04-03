@@ -1,7 +1,9 @@
-import { Reporter, Result } from "./../types";
+import { Reporter, Results } from "./../types";
 import CompositeReporter from "./composite";
 
-const results: readonly Result[] = [{ path: "foo", size: 1, maxSize: 2 }];
+const results: Results = {
+  foo: { path: "foo.js", size: 1, maxSize: 2 },
+};
 
 describe("CompositeReporter", () => {
   let mockReporter: Reporter;

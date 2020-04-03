@@ -7,7 +7,13 @@ import {
 } from "table";
 
 import { endOutputStream, getOutputContext, getOutputStream } from "../shared";
-import { OutputContext, OutputStream, Reporter, Result } from "../types";
+import {
+  OutputContext,
+  OutputStream,
+  Reporter,
+  Result,
+  Results,
+} from "../types";
 
 import {
   formatMaxSize,
@@ -56,18 +62,20 @@ export default class TableReporter implements Reporter {
     return;
   }
 
-  public onRunComplete(results: readonly Result[]): void {
+  public onRunComplete(results: Results): void {
     const { colors } = this.outputContext;
     const bold = (str: string): string => colors.bold(str);
 
+    const values = Object.values(results);
+
     const header = ["Path", "Size", "Max Size", " "].map(bold);
-    const body = results.map((result) => [
+    const body = values.map((result) => [
       formatPath(result, this.outputContext),
       formatSize(result),
       formatMaxSize(result),
       getCheckmark(result, this.outputContext),
     ]);
-    const footer = ["", formatTotalSize(results), "", ""].map(bold);
+    const footer = ["", formatTotalSize(values), "", ""].map(bold);
 
     this.outputStream.write(
       table([header, ...body, footer], this.userConfig) + "\n"

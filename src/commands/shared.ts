@@ -3,7 +3,7 @@ import {
   Reporter,
   ReporterConfig,
   ReporterConstructor,
-  Result,
+  Results,
 } from "../types";
 
 export const getCompositeReporter = (
@@ -42,12 +42,12 @@ export const reportResults = async ({
   results,
   reporter,
 }: {
-  results: readonly Result[];
+  results: Results;
   reporter: Reporter;
 }): Promise<void> => {
   await reporter.onRunStart();
 
-  for (const result of results) {
+  for (const result of Object.values(results)) {
     await reporter.onResult(result);
   }
 
