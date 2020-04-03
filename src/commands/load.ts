@@ -1,5 +1,5 @@
 import { loadConfigSchema } from "../schemas";
-import { getInputStream, isOverBudget } from "../shared";
+import { getInputStream, isOverBudget, readInputStream } from "../shared";
 import { LoadConfig, Result, ReturnValue } from "../types";
 
 import { getCompositeReporter, reportResults } from "./shared";
@@ -29,20 +29,6 @@ const loadResults = async ({
   }
 
   const stream = await getInputStream(input);
-
-  return new Promise((resolve, reject) => {
-    const contents: string[] = [];
-
-    stream.on("data", (data: string | Buffer) => {
-      contents.push(data.toString());
-    });
-
-    stream.on("end", () => {
-      resolve(JSON.parse(contents.join("")) as Result[]);
-    });
-
-    stream.on("error", (error: Error) => {
-      reject(error);
-    });
-  });
+  const contents = await readInputStream(stream);
+  return JSON.parse(contents) as Result[];
 };

@@ -5,6 +5,7 @@ import { Readable, Writable } from "stream";
 
 import axios from "axios";
 import { createReadStream, createWriteStream, ensureFileSync } from "fs-extra";
+import noop from "lodash/noop";
 
 import {
   endOutputStream,
@@ -13,6 +14,7 @@ import {
   getOutputStream,
   getTotalSize,
   isOverBudget,
+  readInputStream,
 } from "./shared";
 import { InputStream, OutputStream, Result } from "./types";
 
@@ -205,6 +207,22 @@ describe(".getInputStream", () => {
 
     it("returns the stream", () => {
       expect(inputStream).toBe(originalStream);
+    });
+  });
+
+  describe(".readInputStream", () => {
+    let promise: Promise<string>;
+
+    beforeEach(() => {
+      const stream = new Readable({ read: noop });
+      stream.push("CONTENTS");
+      stream.push(null);
+
+      promise = readInputStream(stream);
+    });
+
+    it("returns the contents of the stream", async () => {
+      await expect(promise).resolves.toBe("CONTENTS");
     });
   });
 });
