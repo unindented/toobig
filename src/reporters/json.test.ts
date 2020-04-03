@@ -11,10 +11,10 @@ import { Reporter, Result } from "../types";
 
 import { JSONReporter } from ".";
 
-const noResults: Result[] = [];
-const resultsMultipleOver = require("../__fixtures__/results-multiple-over.json") as Result[];
-const resultsOneOver = require("../__fixtures__/results-one-over.json") as Result[];
-const resultsUnder = require("../__fixtures__/results-under.json") as Result[];
+const noResults: readonly Result[] = [];
+const resultsMultipleOver = require("../__fixtures__/results-multiple-over.json") as readonly Result[];
+const resultsOneOver = require("../__fixtures__/results-one-over.json") as readonly Result[];
+const resultsUnder = require("../__fixtures__/results-under.json") as readonly Result[];
 
 describe("JSONReporter", () => {
   let reporter: Reporter;

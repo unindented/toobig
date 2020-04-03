@@ -1,23 +1,23 @@
 import { Chalk } from "chalk";
 
 export interface CommonConfig {
-  reporters?: ReporterConfig[];
+  readonly reporters?: readonly ReporterConfig[];
 }
 
 export interface ScanConfig extends CommonConfig {
-  budgets: BudgetsConfig;
-  cwd?: string;
+  readonly budgets: BudgetsConfig;
+  readonly cwd?: string;
 }
 
 export interface LoadConfig extends CommonConfig {
-  input: string | Result[];
+  readonly input: string | readonly Result[];
 }
 
 export interface BudgetsConfig {
-  [path: string]: string;
+  readonly [path: string]: string;
 }
 
-export type ReporterConfig = string | [string, object];
+export type ReporterConfig = string | readonly [string, object];
 
 export interface Result {
   readonly path: string;
@@ -26,8 +26,8 @@ export interface Result {
 }
 
 export interface ReturnValue {
-  results: Result[];
-  anyOverBudget: boolean;
+  readonly results: readonly Result[];
+  readonly anyOverBudget: boolean;
 }
 
 export interface ReporterConstructor {
@@ -37,12 +37,12 @@ export interface ReporterConstructor {
 export interface Reporter {
   onRunStart(): Promise<void> | void;
   onResult(result: Result): Promise<void> | void;
-  onRunComplete(results: Result[]): Promise<void> | void;
+  onRunComplete(results: readonly Result[]): Promise<void> | void;
 }
 
 export interface OutputContext {
-  colors: Chalk;
-  colorOverride?: Chalk;
+  readonly colors: Chalk;
+  readonly colorOverride?: Chalk;
 }
 
 export type InputStream = NodeJS.ReadableStream;

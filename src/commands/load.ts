@@ -22,13 +22,13 @@ export const loadAndReport = async (
 const loadResults = async ({
   input,
 }: {
-  input: string | Result[];
-}): Promise<Result[]> => {
+  input: string | readonly Result[];
+}): Promise<readonly Result[]> => {
   if (typeof input !== "string") {
     return input;
   }
 
   const stream = await getInputStream(input);
   const contents = await readInputStream(stream);
-  return JSON.parse(contents) as Result[];
+  return JSON.parse(contents) as readonly Result[];
 };

@@ -6,7 +6,7 @@ import { OutputContext, OutputStream, Reporter, Result } from "../types";
 import { formatSizeVsMaxSize, isOverBudget } from "./shared";
 
 export interface JUnitReporterOptions {
-  output?: string | NodeJS.WritableStream;
+  readonly output?: string | NodeJS.WritableStream;
 }
 
 export default class JUnitReporter implements Reporter {
@@ -26,7 +26,7 @@ export default class JUnitReporter implements Reporter {
     return;
   }
 
-  public onRunComplete(results: Result[]): void {
+  public onRunComplete(results: readonly Result[]): void {
     const data = {
       totalCount: results.length,
       failedCount: results.filter(isOverBudget).length,

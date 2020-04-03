@@ -27,7 +27,7 @@ export const formatSizeVsMaxSize = (
   return color(`${formatSize(result)} ${operator} ${formatMaxSize(result)}`);
 };
 
-export const formatTotalSize = (results: Result[]): string =>
+export const formatTotalSize = (results: readonly Result[]): string =>
   bytes(getTotalSize(results));
 
 export const formatPath = (

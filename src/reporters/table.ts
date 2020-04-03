@@ -19,9 +19,9 @@ import {
 } from "./shared";
 
 export interface TableReporterOptions {
-  template?: TableBorderTemplate | "jest" | "markdown";
-  color?: boolean;
-  output?: string | NodeJS.WritableStream;
+  readonly template?: TableBorderTemplate | "jest" | "markdown";
+  readonly color?: boolean;
+  readonly output?: string | NodeJS.WritableStream;
 }
 
 export default class TableReporter implements Reporter {
@@ -56,7 +56,7 @@ export default class TableReporter implements Reporter {
     return;
   }
 
-  public onRunComplete(results: Result[]): void {
+  public onRunComplete(results: readonly Result[]): void {
     const { colors } = this.outputContext;
     const bold = (str: string): string => colors.bold(str);
 

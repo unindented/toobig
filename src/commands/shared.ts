@@ -7,7 +7,7 @@ import {
 } from "../types";
 
 export const getCompositeReporter = (
-  configReporters: ReporterConfig[]
+  configReporters: readonly ReporterConfig[]
 ): Reporter => {
   const reporters = configReporters.map((configReporter) => {
     let reporter: Reporter;
@@ -42,7 +42,7 @@ export const reportResults = async ({
   results,
   reporter,
 }: {
-  results: Result[];
+  results: readonly Result[];
   reporter: Reporter;
 }): Promise<void> => {
   await reporter.onRunStart();

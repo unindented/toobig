@@ -11,7 +11,7 @@ export { supportsColor };
 export const isOverBudget = ({ size, maxSize }: Result): boolean =>
   size >= maxSize;
 
-export const getTotalSize = (results: Result[]): number =>
+export const getTotalSize = (results: readonly Result[]): number =>
   results.reduce((acc, { size }) => acc + size, 0);
 
 export const getOutputContext = (supportsColor: boolean): OutputContext => {

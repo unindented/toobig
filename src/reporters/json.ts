@@ -2,7 +2,7 @@ import { endOutputStream, getOutputStream } from "../shared";
 import { OutputStream, Reporter, Result } from "../types";
 
 export interface JSONReporterOptions {
-  output?: string | NodeJS.WritableStream;
+  readonly output?: string | NodeJS.WritableStream;
 }
 
 export default class JSONReporter implements Reporter {
@@ -20,7 +20,7 @@ export default class JSONReporter implements Reporter {
     return;
   }
 
-  public onRunComplete(results: Result[]): void {
+  public onRunComplete(results: readonly Result[]): void {
     this.outputStream.write(JSON.stringify(results, null, 2) + "\n");
     endOutputStream(this.outputStream);
   }

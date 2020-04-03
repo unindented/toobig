@@ -46,7 +46,7 @@ describe(".isOverBudget", () => {
 
 describe(".getTotalSize", () => {
   describe("when there are no results", () => {
-    const results: Result[] = [];
+    const results: readonly Result[] = [];
 
     it("returns 0", () => {
       expect(getTotalSize(results)).toBe(0);
@@ -54,7 +54,7 @@ describe(".getTotalSize", () => {
   });
 
   describe("when there are results", () => {
-    const results: Result[] = [
+    const results: readonly Result[] = [
       { path: "foo.js", size: 1, maxSize: 2 },
       { path: "bar.js", size: 2, maxSize: 2 },
     ];

@@ -1,7 +1,7 @@
 import { Reporter, Result } from "../types";
 
 export interface CompositeReporterOptions {
-  reporters: Reporter[];
+  readonly reporters: readonly Reporter[];
 }
 
 export default class CompositeReporter implements Reporter {
@@ -21,7 +21,7 @@ export default class CompositeReporter implements Reporter {
     );
   }
 
-  public async onRunComplete(results: Result[]): Promise<void> {
+  public async onRunComplete(results: readonly Result[]): Promise<void> {
     await Promise.all(
       this.reporters.map((reporter) => reporter.onRunComplete(results))
     );

@@ -9,8 +9,8 @@ import {
 } from "./shared";
 
 export interface SummaryReporterOptions {
-  color?: boolean;
-  output?: string | NodeJS.WritableStream;
+  readonly color?: boolean;
+  readonly output?: string | NodeJS.WritableStream;
 }
 
 export default class SummaryReporter implements Reporter {
@@ -33,7 +33,7 @@ export default class SummaryReporter implements Reporter {
     return;
   }
 
-  public onRunComplete(results: Result[]): void {
+  public onRunComplete(results: readonly Result[]): void {
     const { colors } = this.outputContext;
 
     const resultsOverMaxSize = results.filter(isOverBudget);
@@ -62,9 +62,9 @@ const downArrow = " \u21B3 ";
 const dot = " \u2022 ";
 
 const getDetails = (
-  results: Result[],
+  results: readonly Result[],
   outputContext: OutputContext
-): string[] => {
+): readonly string[] => {
   const detailsContext = {
     colors: outputContext.colors,
     colorOverride: outputContext.colors.dim,

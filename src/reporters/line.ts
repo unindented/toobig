@@ -9,8 +9,8 @@ import {
 } from "./shared";
 
 export interface LineReporterOptions {
-  color?: boolean;
-  output?: string | NodeJS.WritableStream;
+  readonly color?: boolean;
+  readonly output?: string | NodeJS.WritableStream;
 }
 
 export default class LineReporter implements Reporter {

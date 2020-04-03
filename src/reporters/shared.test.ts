@@ -88,7 +88,7 @@ describe(".formatSizeVsMaxSize", () => {
 });
 
 describe(".formatTotalSize", () => {
-  const results: Result[] = [
+  const results: readonly Result[] = [
     { path: "foo/bar.js", size: 2, maxSize: 3 },
     { path: "foo/baz.js", size: 4, maxSize: 5 },
   ];

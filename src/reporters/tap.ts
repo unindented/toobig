@@ -6,7 +6,7 @@ import { OutputContext, OutputStream, Reporter, Result } from "../types";
 import { formatSizeVsMaxSize, isOverBudget } from "./shared";
 
 export interface TAPReporterOptions {
-  output?: string | NodeJS.WritableStream;
+  readonly output?: string | NodeJS.WritableStream;
 }
 
 export default class TAPReporter implements Reporter {
@@ -26,7 +26,7 @@ export default class TAPReporter implements Reporter {
     return;
   }
 
-  public onRunComplete(results: Result[]): void {
+  public onRunComplete(results: readonly Result[]): void {
     if (results.length === 0) {
       return;
     }

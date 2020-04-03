@@ -31,7 +31,7 @@ const scanResults = async ({
 }: {
   budgets: BudgetsConfig;
   cwd: string;
-}): Promise<Result[]> => {
+}): Promise<readonly Result[]> => {
   const results: Result[] = [];
 
   for (const budget of Object.keys(budgets)) {
