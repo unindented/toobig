@@ -28,14 +28,9 @@ export const configParser = (configPath?: string): object => {
     ? explorer.load(configPath)
     : explorer.search(configPath);
 
-  if (result == null || typeof result.config !== "object") {
-    // istanbul ignore next
-    throw new Error(
-      `No config file found starting from "${configPath ?? process.cwd()}"`
-    );
-  }
-
-  return result.config as object;
+  return result != null && typeof result.config === "object"
+    ? (result.config as object)
+    : {};
 };
 
 const isFile = (path?: string): path is string =>

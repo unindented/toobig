@@ -44,10 +44,8 @@ describe(".configParser", () => {
   describe("with a path to a directory not containing a config file", () => {
     const configPath = tmpdir();
 
-    it("throws", () => {
-      expect(() => {
-        configParser(configPath);
-      }).toThrow();
+    it("returns an empty object", () => {
+      expect(configParser(configPath)).toEqual({});
     });
   });
 });
