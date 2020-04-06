@@ -1,3 +1,14 @@
+## [3.0.0](https://github.com/unindented/toobig/compare/v2.0.0...v3.0.0) (2020-04-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Renamed `--input` flag to `--results`.
+
+### Features
+
+* allow comparison with baseline results ([0ddbf37](https://github.com/unindented/toobig/commit/0ddbf37cde2e4f420f0eebedabca8ae1b1c2e8ad))
+
 ## [2.0.0](https://github.com/unindented/toobig/compare/v1.0.1...v2.0.0) (2020-04-03)
 
 
