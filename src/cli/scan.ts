@@ -6,7 +6,6 @@ import { ScanConfig } from "../types";
 
 import { configParser } from "./shared";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const pkg = require("../../package.json") as { homepage: string };
 
 export const command = ["scan [options]", "$0"];
@@ -14,7 +13,8 @@ export const command = ["scan [options]", "$0"];
 export const describe =
   "Scan current working directory to check for entries over budget, and report them";
 
-export const builder = (yargs: Argv): Argv =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const builder = (yargs: Argv): Argv<any> =>
   yargs
     .option("budgets", {
       describe: "Budgets to apply when scanning",
@@ -28,6 +28,10 @@ export const builder = (yargs: Argv): Argv =>
       default: ".",
       normalize: true,
     })
+    .option("baselines", {
+      describe: "Baseline results file (path or URL)",
+      type: "string",
+    })
     .option("reporters", {
       describe: "Reporters to process results",
       type: "array",
@@ -40,7 +44,10 @@ export const builder = (yargs: Argv): Argv =>
       config: true,
       configParser,
     })
-    .group(["budgets", "cwd", "reporters", "config"], "Command options:")
+    .group(
+      ["budgets", "cwd", "baselines", "reporters", "config"],
+      "Command options:"
+    )
     .example("$0 scan", "")
     .example("$0 scan --config myconfig.json", "")
     .example('$0 scan --budgets "dist/*.js" 4KB --budgets "dist/*.css" 2KB', "")
@@ -55,8 +62,8 @@ export const handler = async (argv: ScanConfig): Promise<boolean> => {
 
 type ParsedArray = object[] | string[] | string[][];
 
+// istanbul ignore next
 const coerceBudgets = (budgets: ParsedArray): object =>
-  // istanbul ignore next
   isNestedStringArray(budgets)
     ? fromPairs(budgets)
     : isStringArray(budgets)

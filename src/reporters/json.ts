@@ -12,13 +12,9 @@ export default class JSONReporter implements Reporter {
     this.outputStream = getOutputStream(output);
   }
 
-  public onRunStart(): void {
-    return;
-  }
+  public onRunStart(): void {}
 
-  public onResult(): void {
-    return;
-  }
+  public onResult(): void {}
 
   public onRunComplete(results: Results): void {
     this.outputStream.write(JSON.stringify(results, null, 2) + "\n");

@@ -3,10 +3,11 @@
 exports[`load with \`--help\` shows help output 1`] = `
 "toobig load [options]
 
-Load results from input file, and report them
+Load results from a file, and report them
 
 Command options:
-  --input      Input file                            [string] [default: \\"stdin\\"]
+  --results    Results file (path or URL)            [string] [default: \\"stdin\\"]
+  --baselines  Baseline results file (path or URL)                      [string]
   --reporters  Reporters to process results                              [array]
   --config     Config file, or directory to search for one
                                                          [string] [default: \\".\\"]
@@ -16,10 +17,9 @@ Options:
   --help     Show help                                                 [boolean]
 
 Examples:
-  toobig load results.json --reporters table summary
-  toobig load --input results.json
-  toobig load --input results.json --config myconfig.json
-  toobig load --input results.json --reporters table summary
+  toobig load --results results.json
+  toobig load --results results.json --config myconfig.json
+  toobig load --results results.json --reporters table summary
   toobig load < results.json
   toobig scan --reporters json | toobig load
 

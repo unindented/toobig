@@ -1,9 +1,14 @@
 import template from "lodash/template";
 
-import { endOutputStream, getOutputContext, getOutputStream } from "../shared";
+import {
+  endOutputStream,
+  getOutputContext,
+  getOutputStream,
+  isOverBudget,
+} from "../shared";
 import { OutputContext, OutputStream, Reporter, Results } from "../types";
 
-import { formatSizeVsMaxSize, isOverBudget } from "./shared";
+import { formatSizeVsMaxSize } from "./shared";
 
 export interface JUnitReporterOptions {
   readonly output?: string | NodeJS.WritableStream;
@@ -14,17 +19,13 @@ export default class JUnitReporter implements Reporter {
   private readonly outputStream: OutputStream;
 
   public constructor({ output = "stdout" }: JUnitReporterOptions = {}) {
-    this.outputContext = getOutputContext(false);
+    this.outputContext = getOutputContext({ supportsColor: false });
     this.outputStream = getOutputStream(output);
   }
 
-  public onRunStart(): void {
-    return;
-  }
+  public onRunStart(): void {}
 
-  public onResult(): void {
-    return;
-  }
+  public onResult(): void {}
 
   public onRunComplete(results: Results): void {
     const values = Object.values(results);
@@ -36,11 +37,14 @@ export default class JUnitReporter implements Reporter {
       results: values.map((result) => ({
         ...result,
         isOverBudget: isOverBudget(result),
-        message: formatSizeVsMaxSize(result, this.outputContext),
+        message: formatSizeVsMaxSize({
+          result,
+          outputContext: this.outputContext,
+        }),
       })),
     };
     const output = contentTemplate(data);
-    const outputWithoutEmptyLines = output.replace(/^\s*[\n\r]/gm, "");
+    const outputWithoutEmptyLines = output.replace(/^\s*[\n\r]/gmu, "");
 
     this.outputStream.write(outputWithoutEmptyLines);
     endOutputStream(this.outputStream);

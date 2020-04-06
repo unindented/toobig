@@ -1,24 +1,100 @@
 import { parse } from "url";
 
 import axios from "axios";
-import { Instance as ChalkInstance, supportsColor } from "chalk";
+import {
+  Instance as ChalkInstance,
+  supportsColor as globalSupportsColor,
+} from "chalk";
 import { createReadStream, createWriteStream, ensureFileSync } from "fs-extra";
 
-import { InputStream, OutputContext, OutputStream, Result } from "./types";
+import {
+  InputStream,
+  OutputContext,
+  OutputStream,
+  Result,
+  ResultContext,
+  Results,
+  ResultsContext,
+  ResultsWithBaselinesContext,
+  WritableResults,
+} from "./types";
 
-export { supportsColor };
+export { globalSupportsColor as supportsColor };
 
 export const isOverBudget = ({ size, maxSize }: Result): boolean =>
   size >= maxSize;
 
-export const getTotalSize = (results: readonly Result[]): number =>
-  results.reduce((acc, { size }) => acc + size, 0);
+export const getBaselineDifference = ({
+  result,
+  baseline,
+}: Pick<ResultContext, "result" | "baseline">): number =>
+  result.size - (baseline ? baseline.size : 0);
 
-export const getOutputContext = (supportsColor: boolean): OutputContext => {
-  return {
-    colors: new ChalkInstance(!supportsColor ? { level: 0 } : undefined),
-  };
+export const isUnderBaseline = (baselines?: Results) => (
+  result: Result
+): boolean => {
+  if (baselines === undefined) {
+    return false;
+  }
+
+  const baseline = baselines[result.path];
+  return getBaselineDifference({ result, baseline }) < 0;
 };
+
+export const isOverBaseline = (baselines?: Results) => (
+  result: Result
+): boolean => {
+  if (baselines === undefined) {
+    return false;
+  }
+
+  const baseline = baselines[result.path];
+  return getBaselineDifference({ result, baseline }) > 0;
+};
+
+export const filterResults = (
+  results: Results,
+  predicate: (result: Result) => boolean
+): Results =>
+  Object.keys(results).reduce((acc, key) => {
+    if (predicate(results[key])) {
+      acc[key] = results[key];
+    }
+    return acc;
+  }, {} as WritableResults);
+
+export const getTotalResultsSize = ({
+  results,
+}: Pick<ResultsContext, "results">): number => getTotalSize(results);
+
+export const getTotalBaselinesSize = ({
+  baselines,
+}: Pick<ResultsWithBaselinesContext, "baselines">): number =>
+  getTotalSize(baselines);
+
+const getTotalSize = (results: Results): number =>
+  Object.values(results).reduce((acc, { size }) => acc + size, 0);
+
+export const getTotalBaselinesDifference = ({
+  results,
+  baselines,
+}: Pick<ResultsWithBaselinesContext, "results" | "baselines">): number =>
+  Object.values(results).reduce((acc, { path, size }) => {
+    const baseline = baselines[path];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return acc + size - (baseline ? baseline.size : 0);
+  }, 0);
+
+export const getOutputContext = ({
+  supportsColor,
+  maxLength = Infinity,
+}: {
+  supportsColor: boolean;
+  maxLength?: number;
+}): OutputContext => ({
+  colors: new ChalkInstance(!supportsColor ? { level: 0 } : undefined),
+  maxLength,
+});
 
 export const getOutputStream = (
   output: string | NodeJS.WritableStream
@@ -52,9 +128,9 @@ export const getInputStream = async (
 
   if (typeof input === "string") {
     const { protocol } = parse(input);
-    return protocol == null
+    return protocol === null
       ? createReadStream(input)
-      : await createAxiosStream(input);
+      : createAxiosStream(input);
   }
 
   return input;

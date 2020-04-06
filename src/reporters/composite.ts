@@ -15,15 +15,20 @@ export default class CompositeReporter implements Reporter {
     await Promise.all(this.reporters.map((reporter) => reporter.onRunStart()));
   }
 
-  public async onResult(result: Result): Promise<void> {
+  public async onResult(result: Result, baseline: Result): Promise<void> {
     await Promise.all(
-      this.reporters.map((reporter) => reporter.onResult(result))
+      this.reporters.map((reporter) => reporter.onResult(result, baseline))
     );
   }
 
-  public async onRunComplete(results: Results): Promise<void> {
+  public async onRunComplete(
+    results: Results,
+    baselines?: Results
+  ): Promise<void> {
     await Promise.all(
-      this.reporters.map((reporter) => reporter.onRunComplete(results))
+      this.reporters.map((reporter) =>
+        reporter.onRunComplete(results, baselines)
+      )
     );
   }
 }

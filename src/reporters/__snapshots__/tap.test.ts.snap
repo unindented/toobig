@@ -1,9 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TAPReporter with default options with all results under budget writes to output stream with results 1`] = `
-"1..2
+"1..4
 ok 1 - 3.97KB < 4KB
 ok 2 - 3.97KB < 4KB
+ok 3 - 3.94KB < 4KB
+ok 4 - 3.94KB < 4KB
 "
 `;
 
@@ -26,9 +28,11 @@ not ok 2 - 4.13KB >= 4KB
 `;
 
 exports[`TAPReporter with output stream with all results under budget writes to output stream with results 1`] = `
-"1..2
+"1..4
 ok 1 - 3.97KB < 4KB
 ok 2 - 3.97KB < 4KB
+ok 3 - 3.94KB < 4KB
+ok 4 - 3.94KB < 4KB
 "
 `;
 

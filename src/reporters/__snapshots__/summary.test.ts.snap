@@ -2,6 +2,17 @@
 
 exports[`SummaryReporter with default options with all results under budget writes to output stream with results 1`] = `""`;
 
+exports[`SummaryReporter with default options with baselines writes to output stream with results 1`] = `
+"[1mSummary[22m
+[1m[32m › 1 entry under baseline[39m[22m
+   ↳   • [2mfoo/[22m[1mqux.js[22m [2m3.94KB < 3.97KB[22m
+[1m[33m › 2 entries over baseline[39m[22m
+   ↳   • [2mfoo/[22m[1mbar.js[22m [2m3.97KB >= 3.94KB[22m
+       • [2mfoo/[22m[1mquux.js[22m [2m3.94KB >= 0B[22m
+
+"
+`;
+
 exports[`SummaryReporter with default options with multiple results over budget writes to output stream with results 1`] = `
 "[1mSummary[22m
 [1m[31m › 3 entries over budget[39m[22m
@@ -24,6 +35,17 @@ exports[`SummaryReporter with default options with one result over budget writes
 
 exports[`SummaryReporter with output stream with all results under budget writes to output stream with results 1`] = `""`;
 
+exports[`SummaryReporter with output stream with baselines writes to output stream with results 1`] = `
+"[1mSummary[22m
+[1m[32m › 1 entry under baseline[39m[22m
+   ↳   • [2mfoo/[22m[1mqux.js[22m [2m3.94KB < 3.97KB[22m
+[1m[33m › 2 entries over baseline[39m[22m
+   ↳   • [2mfoo/[22m[1mbar.js[22m [2m3.97KB >= 3.94KB[22m
+       • [2mfoo/[22m[1mquux.js[22m [2m3.94KB >= 0B[22m
+
+"
+`;
+
 exports[`SummaryReporter with output stream with multiple results over budget writes to output stream with results 1`] = `
 "[1mSummary[22m
 [1m[31m › 3 entries over budget[39m[22m
@@ -45,6 +67,17 @@ exports[`SummaryReporter with output stream with one result over budget writes t
 `;
 
 exports[`SummaryReporter without color with all results under budget writes to output stream with results 1`] = `""`;
+
+exports[`SummaryReporter without color with baselines writes to output stream with results 1`] = `
+"Summary
+ › 1 entry under baseline
+   ↳   • foo/qux.js 3.94KB < 3.97KB
+ › 2 entries over baseline
+   ↳   • foo/bar.js 3.97KB >= 3.94KB
+       • foo/quux.js 3.94KB >= 0B
+
+"
+`;
 
 exports[`SummaryReporter without color with multiple results over budget writes to output stream with results 1`] = `
 "Summary

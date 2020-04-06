@@ -121,6 +121,12 @@ To specify the reporters to use:
 toobig --reporters json > toobig-report.json
 ```
 
+To compare against the results of a previous run:
+
+```
+toobig --baselines toobig-previous.json --reporters table summary
+```
+
 #### `load [options]`
 
 `load` allows you to load results from a previous run, and report them.
@@ -134,13 +140,19 @@ toobig load --help
 To run:
 
 ```
-toobig load --input toobig-report.json
+toobig load --results toobig-report.json
 ```
 
 To specify the reporters to use:
 
 ```
-toobig load --input toobig-report.json --reporters table summary
+toobig load --results toobig-report.json --reporters table summary
+```
+
+To compare against the results of a previous run:
+
+```
+toobig load --results toobig-report.json --baselines toobig-previous.json --reporters table summary
 ```
 
 ### Programmatic
@@ -165,7 +177,7 @@ const { results, anyOverBudget } = await scanAndReport({
 import { loadAndReport } from "toobig";
 
 const { results, anyOverBudget } = await loadAndReport({
-  input: "toobig-report.json",
+  results: "toobig-report.json",
   reporters: [
     "default",
     ["junit", { output: "toobig-report.xml" }],

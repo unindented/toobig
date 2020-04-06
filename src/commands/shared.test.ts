@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import { resolve as resolvePath } from "path";
 
 import { CompositeReporter } from "../reporters";
 import { Reporter, Results } from "../types";
@@ -11,38 +11,76 @@ describe(".getCompositeReporter", () => {
       getCompositeReporter([
         "line",
         ["table", { template: "markdown" }],
-        resolve(__dirname, "../reporters/summary"),
+        resolvePath(__dirname, "../reporters/summary"),
       ])
     ).toBeInstanceOf(CompositeReporter);
   });
 });
 
 describe(".reportResults", () => {
-  const results: Results = {
+  const mockResults: Results = {
     "foo/bar.js": { path: "foo/bar.js", size: 4064, maxSize: 4096 },
     "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
   };
 
   let mockReporter: Reporter;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mockReporter = {
       onRunStart: jest.fn().mockName("onRunStart"),
       onResult: jest.fn().mockName("onResult"),
       onRunComplete: jest.fn().mockName("onRunComplete"),
     };
-    await reportResults({ results, reporter: mockReporter });
   });
 
-  it("calls `reporter.onRunStart` once", () => {
-    expect(mockReporter.onRunStart).toHaveBeenCalledTimes(1);
+  describe("without baselines", () => {
+    beforeEach(async () => {
+      await reportResults({ results: mockResults, reporter: mockReporter });
+    });
+
+    it("calls `reporter.onRunStart` once", () => {
+      expect(mockReporter.onRunStart).toHaveBeenCalledTimes(1);
+    });
+
+    it("calls `reporter.onResult` once per result", () => {
+      expect(mockReporter.onResult).toHaveBeenCalledTimes(2);
+    });
+
+    it("calls `reporter.onRunComplete` once", () => {
+      expect(mockReporter.onRunComplete).toHaveBeenCalledWith(
+        mockResults,
+        undefined
+      );
+    });
   });
 
-  it("calls `reporter.onResult` once per result", () => {
-    expect(mockReporter.onResult).toHaveBeenCalledTimes(2);
-  });
+  describe("with baselines", () => {
+    const mockBaselines: Results = {
+      "foo/bar.js": { path: "foo/bar.js", size: 4032, maxSize: 4096 },
+      "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
+    };
 
-  it("calls `reporter.onRunComplete` once", () => {
-    expect(mockReporter.onRunComplete).toHaveBeenCalledWith(results);
+    beforeEach(async () => {
+      await reportResults({
+        results: mockResults,
+        baselines: mockBaselines,
+        reporter: mockReporter,
+      });
+    });
+
+    it("calls `reporter.onRunStart` once", () => {
+      expect(mockReporter.onRunStart).toHaveBeenCalledTimes(1);
+    });
+
+    it("calls `reporter.onResult` once per result", () => {
+      expect(mockReporter.onResult).toHaveBeenCalledTimes(2);
+    });
+
+    it("calls `reporter.onRunComplete` once", () => {
+      expect(mockReporter.onRunComplete).toHaveBeenCalledWith(
+        mockResults,
+        mockBaselines
+      );
+    });
   });
 });

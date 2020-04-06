@@ -1,7 +1,7 @@
 {
   "foo/bar.js": {
     "path": "foo/bar.js",
-    "size": 4064,
+    "size": 4032,
     "maxSize": 4096
   },
   "foo/baz.js": {
@@ -11,12 +11,7 @@
   },
   "foo/qux.js": {
     "path": "foo/qux.js",
-    "size": 4032,
-    "maxSize": 4096
-  },
-  "foo/quux.js": {
-    "path": "foo/quux.js",
-    "size": 4032,
+    "size": 4064,
     "maxSize": 4096
   }
 }

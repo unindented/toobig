@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("../shared", () => ({
   ...jest.requireActual("../shared"),
   getOutputStream: jest.fn().mockName("getOutputStream"),
@@ -13,6 +12,7 @@ import { Reporter, Results } from "../types";
 import { TableReporter } from ".";
 
 const noResults: Results = {};
+const resultsBaselines = require("../__fixtures__/results-baselines.json") as Results;
 const resultsMultipleOver = require("../__fixtures__/results-multiple-over.json") as Results;
 const resultsOneOver = require("../__fixtures__/results-one-over.json") as Results;
 const resultsUnder = require("../__fixtures__/results-under.json") as Results;
@@ -37,19 +37,20 @@ describe("TableReporter", () => {
     ["without color", { color: false }],
     ["with template `markdown`", { template: "markdown" as const }],
     ["with template `ramac`", { template: "ramac" as const }],
-  ])("%s", (_desc, options) => {
+  ])("%s", (_desc1, options) => {
     beforeEach(() => {
       reporter = new TableReporter(options);
     });
 
     describe.each([
-      ["with all results under budget", resultsUnder],
-      ["with one result over budget", resultsOneOver],
-      ["with multiple results over budget", resultsMultipleOver],
-      ["with no results", noResults],
-    ])("%s", (_desc, results) => {
+      ["with all results under budget", resultsUnder, undefined],
+      ["with one result over budget", resultsOneOver, undefined],
+      ["with multiple results over budget", resultsMultipleOver, undefined],
+      ["with no results", noResults, undefined],
+      ["with baselines", resultsUnder, resultsBaselines],
+    ])("%s", (_desc2, results, baselines) => {
       beforeEach(async () => {
-        await reportResults({ results, reporter });
+        await reportResults({ results, baselines, reporter });
       });
 
       it("writes to output stream with results", () => {

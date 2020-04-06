@@ -3,6 +3,7 @@ import Joi from "@hapi/joi";
 import { reportersConfigSchema, resultsConfigSchema } from "./shared";
 
 export const loadConfigSchema = Joi.object({
-  input: Joi.alternatives().try(Joi.string(), resultsConfigSchema).required(),
+  results: Joi.alternatives().try(Joi.string(), resultsConfigSchema).required(),
+  baselines: Joi.alternatives().try(Joi.string(), resultsConfigSchema),
   reporters: reportersConfigSchema,
 }).unknown();

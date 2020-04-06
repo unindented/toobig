@@ -11,6 +11,16 @@ exports[`JSONReporter with default options with all results under budget writes 
     \\"path\\": \\"foo/baz.js\\",
     \\"size\\": 4064,
     \\"maxSize\\": 4096
+  },
+  \\"foo/qux.js\\": {
+    \\"path\\": \\"foo/qux.js\\",
+    \\"size\\": 4032,
+    \\"maxSize\\": 4096
+  },
+  \\"foo/quux.js\\": {
+    \\"path\\": \\"foo/quux.js\\",
+    \\"size\\": 4032,
+    \\"maxSize\\": 4096
   }
 }
 "
@@ -73,6 +83,16 @@ exports[`JSONReporter with output stream with all results under budget writes to
   \\"foo/baz.js\\": {
     \\"path\\": \\"foo/baz.js\\",
     \\"size\\": 4064,
+    \\"maxSize\\": 4096
+  },
+  \\"foo/qux.js\\": {
+    \\"path\\": \\"foo/qux.js\\",
+    \\"size\\": 4032,
+    \\"maxSize\\": 4096
+  },
+  \\"foo/quux.js\\": {
+    \\"path\\": \\"foo/quux.js\\",
+    \\"size\\": 4032,
     \\"maxSize\\": 4096
   }
 }

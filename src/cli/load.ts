@@ -5,24 +5,28 @@ import { LoadConfig } from "../types";
 
 import { configParser } from "./shared";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const pkg = require("../../package.json") as { homepage: string };
 
 export const command = "load [options]";
 
-export const describe = "Load results from input file, and report them";
+export const describe = "Load results from a file, and report them";
 
-const isInputRequired = !!process.stdin.isTTY;
+const isResultsRequired = Boolean(process.stdin.isTTY);
 // istanbul ignore next
-const inputDefault = !isInputRequired ? "stdin" : undefined;
+const resultsDefault = !isResultsRequired ? "stdin" : undefined;
 
-export const builder = (yargs: Argv): Argv =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const builder = (yargs: Argv): Argv<any> =>
   yargs
-    .option("input", {
-      describe: "Input file",
+    .option("results", {
+      describe: "Results file (path or URL)",
       type: "string",
-      required: isInputRequired,
-      default: inputDefault,
+      required: isResultsRequired,
+      default: resultsDefault,
+    })
+    .option("baselines", {
+      describe: "Baseline results file (path or URL)",
+      type: "string",
     })
     .option("reporters", {
       describe: "Reporters to process results",
@@ -36,11 +40,10 @@ export const builder = (yargs: Argv): Argv =>
       config: true,
       configParser,
     })
-    .group(["input", "reporters", "config"], "Command options:")
-    .example("$0 load results.json --reporters table summary", "")
-    .example("$0 load --input results.json", "")
-    .example("$0 load --input results.json --config myconfig.json", "")
-    .example("$0 load --input results.json --reporters table summary", "")
+    .group(["results", "baselines", "reporters", "config"], "Command options:")
+    .example("$0 load --results results.json", "")
+    .example("$0 load --results results.json --config myconfig.json", "")
+    .example("$0 load --results results.json --reporters table summary", "")
     .example("$0 load < results.json", "")
     .example("$0 scan --reporters json | $0 load", "")
     .epilogue(`For more details, please see: ${pkg.homepage}`);

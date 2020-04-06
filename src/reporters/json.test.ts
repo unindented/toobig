@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("../shared", () => ({
   ...jest.requireActual("../shared"),
   getOutputStream: jest.fn().mockName("getOutputStream"),
@@ -35,7 +34,7 @@ describe("JSONReporter", () => {
   describe.each([
     ["with default options", undefined],
     ["with output stream", { output: "foobar" }],
-  ])("%s", (_desc, options) => {
+  ])("%s", (_desc1, options) => {
     beforeEach(() => {
       reporter = new JSONReporter(options);
     });
@@ -45,7 +44,7 @@ describe("JSONReporter", () => {
       ["with one result over budget", resultsOneOver],
       ["with multiple results over budget", resultsMultipleOver],
       ["with no results", noResults],
-    ])("%s", (_desc, results) => {
+    ])("%s", (_desc2, results) => {
       beforeEach(async () => {
         await reportResults({ results, reporter });
       });

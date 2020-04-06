@@ -8,10 +8,8 @@ import { parserConfiguration } from "./shared";
 
 yargs
   .usage("Usage: $0 [command] [options]")
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  .command<any>(scanCommand)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  .command<any>(loadCommand)
+  .command(scanCommand)
+  .command(loadCommand)
   .onFinishCommand((anyOverBudget: boolean) => {
     if (anyOverBudget) {
       throw new Error("Some entries are over budget");

@@ -1,6 +1,6 @@
 jest.mock("../commands/load");
 
-import { resolve } from "path";
+import { resolve as resolvePath } from "path";
 
 import yargs, { Arguments } from "yargs";
 
@@ -10,7 +10,6 @@ import { LoadConfig } from "../types";
 import * as loadCommand from "./load";
 import { parserConfiguration } from "./shared";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const pkg = require("../../package.json") as { name: string };
 
 describe("load", () => {
@@ -59,15 +58,15 @@ describe("load", () => {
     });
   });
 
-  describe("with input", () => {
+  describe("with results", () => {
     beforeEach(async () => {
-      await parse("load --input results.json");
+      await parse("load --results results.json");
     });
 
     it("calls `loadAndReport` with the right configuration", () => {
       expect(loadAndReport).toHaveBeenCalledWith(
         expect.objectContaining({
-          input: "results.json",
+          results: "results.json",
         })
       );
     });
@@ -75,7 +74,7 @@ describe("load", () => {
 
   describe("with reporters", () => {
     beforeEach(async () => {
-      await parse("load --input results.json --reporters table summary");
+      await parse("load --results results.json --reporters table summary");
     });
 
     it("calls `loadAndReport` with the right configuration", () => {
@@ -88,7 +87,7 @@ describe("load", () => {
   });
 
   describe("with a config file", () => {
-    const configPath = resolve(
+    const configPath = resolvePath(
       __dirname,
       "../__fixtures__/load-config-valid.json"
     );

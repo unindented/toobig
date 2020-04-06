@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import { resolve as resolvePath } from "path";
 
 import bytes from "bytes";
 import glob from "fast-glob";
@@ -15,21 +15,33 @@ import {
   WritableResults,
 } from "../types";
 
-import { getCompositeReporter, reportResults } from "./shared";
+import { getCompositeReporter, loadResults, reportResults } from "./shared";
 
 export const scanAndReport = async (
   config: ScanConfig
 ): Promise<ReturnValue> => {
   await scanConfigSchema.validateAsync(config);
 
-  const { budgets, cwd = process.cwd(), reporters = ["default"] } = config;
+  const {
+    budgets,
+    cwd = process.cwd(),
+    baselines,
+    reporters = ["default"],
+  } = config;
   const compositeReporter = getCompositeReporter(reporters);
 
-  const results = await scanResults({ budgets, cwd });
-  await reportResults({ results, reporter: compositeReporter });
+  const scannedResults = await scanResults({ budgets, cwd });
+  const baselineResults = baselines
+    ? await loadResults({ results: baselines })
+    : undefined;
+  await reportResults({
+    results: scannedResults,
+    baselines: baselineResults,
+    reporter: compositeReporter,
+  });
 
-  const anyOverBudget = Object.values(results).some(isOverBudget);
-  return { results, anyOverBudget };
+  const anyOverBudget = Object.values(scannedResults).some(isOverBudget);
+  return { results: scannedResults, anyOverBudget };
 };
 
 const scanResults = async ({
@@ -48,11 +60,11 @@ const scanResults = async ({
     for (const path of paths) {
       const result: Result = {
         path: path.toString(),
-        size: await getSize(resolve(cwd, path.toString())),
+        size: await getSize(resolvePath(cwd, path.toString())),
         maxSize,
       };
 
-      if (results[path] == null || results[path].maxSize > maxSize) {
+      if (results[path] === undefined || results[path].maxSize > maxSize) {
         results[path] = result;
       }
     }
@@ -64,7 +76,7 @@ const scanResults = async ({
 const getSize = (path: string): Promise<number> =>
   new Promise((resolve, reject) => {
     getFolderSize(path, (err, size) => {
-      if (err != null) {
+      if (err !== null) {
         reject(err);
         return;
       }

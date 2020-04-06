@@ -9,72 +9,235 @@ import noop from "lodash/noop";
 
 import {
   endOutputStream,
+  filterResults,
+  getBaselineDifference,
   getInputStream,
   getOutputContext,
   getOutputStream,
-  getTotalSize,
+  getTotalBaselinesDifference,
+  getTotalBaselinesSize,
+  getTotalResultsSize,
+  isOverBaseline,
   isOverBudget,
+  isUnderBaseline,
   readInputStream,
 } from "./shared";
-import { InputStream, OutputStream, Result } from "./types";
+import { InputStream, OutputStream, Result, Results } from "./types";
 
-describe(".isOverBudget", () => {
-  describe("when result is over budget", () => {
-    const result: Result = { path: "foo/bar.js", size: 2, maxSize: 1 };
+describe(".getBaselineDifference", () => {
+  describe("without a baseline", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 2, maxSize: 1 };
 
-    it("returns true", () => {
-      expect(isOverBudget(result)).toBe(true);
+    it("returns the difference", () => {
+      expect(getBaselineDifference({ result: mockResult })).toBe(2);
     });
   });
 
-  describe("when result is equal to budget", () => {
-    const result: Result = { path: "foo/bar.js", size: 2, maxSize: 2 };
+  describe("with a baseline", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 2, maxSize: 1 };
+    const mockBaseline: Result = { path: "foo/bar.js", size: 1, maxSize: 1 };
 
-    it("returns true", () => {
-      expect(isOverBudget(result)).toBe(true);
-    });
-  });
-
-  describe("when result is under budget", () => {
-    const result: Result = { path: "foo/bar.js", size: 2, maxSize: 3 };
-
-    it("returns false", () => {
-      expect(isOverBudget(result)).toBe(false);
+    it("returns the difference", () => {
+      expect(
+        getBaselineDifference({
+          result: mockResult,
+          baseline: mockBaseline,
+        })
+      ).toBe(1);
     });
   });
 });
 
-describe(".getTotalSize", () => {
+describe(".isUnderBaseline", () => {
+  const baselines = {
+    "foo/bar.js": { path: "foo/bar.js", size: 2, maxSize: 1 },
+  };
+
+  describe("when result is under baseline", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 1, maxSize: 1 };
+
+    it("returns true", () => {
+      expect(isUnderBaseline(baselines)(mockResult)).toBe(true);
+    });
+  });
+
+  describe("when result is equal to baseline", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 2, maxSize: 1 };
+
+    it("returns false", () => {
+      expect(isUnderBaseline(baselines)(mockResult)).toBe(false);
+    });
+  });
+
+  describe("when result is over baseline", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 3, maxSize: 1 };
+
+    it("returns false", () => {
+      expect(isUnderBaseline(baselines)(mockResult)).toBe(false);
+    });
+  });
+
+  describe("without baselines", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 1, maxSize: 1 };
+
+    it("returns false", () => {
+      expect(isUnderBaseline()(mockResult)).toBe(false);
+    });
+  });
+});
+
+describe(".isOverBaseline", () => {
+  const baselines = {
+    "foo/bar.js": { path: "foo/bar.js", size: 2, maxSize: 1 },
+  };
+
+  describe("when result is over baseline", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 3, maxSize: 1 };
+
+    it("returns true", () => {
+      expect(isOverBaseline(baselines)(mockResult)).toBe(true);
+    });
+  });
+
+  describe("when result is equal to baseline", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 2, maxSize: 1 };
+
+    it("returns false", () => {
+      expect(isOverBaseline(baselines)(mockResult)).toBe(false);
+    });
+  });
+
+  describe("when result is under baseline", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 1, maxSize: 1 };
+
+    it("returns false", () => {
+      expect(isOverBaseline(baselines)(mockResult)).toBe(false);
+    });
+  });
+
+  describe("without baselines", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 3, maxSize: 1 };
+
+    it("returns false", () => {
+      expect(isOverBaseline()(mockResult)).toBe(false);
+    });
+  });
+});
+
+describe(".isOverBudget", () => {
+  describe("when result is over budget", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 2, maxSize: 1 };
+
+    it("returns true", () => {
+      expect(isOverBudget(mockResult)).toBe(true);
+    });
+  });
+
+  describe("when result is equal to budget", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 2, maxSize: 2 };
+
+    it("returns true", () => {
+      expect(isOverBudget(mockResult)).toBe(true);
+    });
+  });
+
+  describe("when result is under budget", () => {
+    const mockResult: Result = { path: "foo/bar.js", size: 2, maxSize: 3 };
+
+    it("returns false", () => {
+      expect(isOverBudget(mockResult)).toBe(false);
+    });
+  });
+});
+
+describe(".filterResults", () => {
+  const mockResults: Results = {
+    "foo.js": { path: "foo.js", size: 1, maxSize: 2 },
+    "bar.js": { path: "bar.js", size: 2, maxSize: 2 },
+  };
+
+  it("returns filtered results", () => {
+    const filteredResults = filterResults(mockResults, ({ size }) => size < 2);
+    expect(Object.keys(filteredResults)).toHaveLength(1);
+  });
+});
+
+describe(".getTotalResultsSize", () => {
   describe("when there are no results", () => {
-    const results: readonly Result[] = [];
+    const mockResults: Results = {};
 
     it("returns 0", () => {
-      expect(getTotalSize(results)).toBe(0);
+      expect(getTotalResultsSize({ results: mockResults })).toBe(0);
     });
   });
 
   describe("when there are results", () => {
-    const results: readonly Result[] = [
-      { path: "foo.js", size: 1, maxSize: 2 },
-      { path: "bar.js", size: 2, maxSize: 2 },
-    ];
+    const mockResults: Results = {
+      "foo.js": { path: "foo.js", size: 1, maxSize: 2 },
+      "bar.js": { path: "bar.js", size: 2, maxSize: 2 },
+    };
 
     it("returns the total size", () => {
-      expect(getTotalSize(results)).toBe(3);
+      expect(getTotalResultsSize({ results: mockResults })).toBe(3);
     });
+  });
+});
+
+describe(".getTotalBaselinesSize", () => {
+  describe("when there are no baselines", () => {
+    const mockBaselines: Results = {};
+
+    it("returns 0", () => {
+      expect(getTotalBaselinesSize({ baselines: mockBaselines })).toBe(0);
+    });
+  });
+
+  describe("when there are baselines", () => {
+    const mockBaselines: Results = {
+      "foo.js": { path: "foo.js", size: 1, maxSize: 2 },
+      "bar.js": { path: "bar.js", size: 1, maxSize: 2 },
+    };
+
+    it("returns the total size", () => {
+      expect(getTotalBaselinesSize({ baselines: mockBaselines })).toBe(2);
+    });
+  });
+});
+
+describe(".getTotalBaselinesDifference", () => {
+  const mockResults: Results = {
+    "foo.js": { path: "foo.js", size: 1, maxSize: 2 },
+    "bar.js": { path: "bar.js", size: 2, maxSize: 2 },
+    "baz.js": { path: "baz.js", size: 1, maxSize: 2 },
+  };
+  const mockBaselines: Results = {
+    "foo.js": { path: "foo.js", size: 1, maxSize: 2 },
+    "bar.js": { path: "bar.js", size: 1, maxSize: 2 },
+    "qux.js": { path: "qux.js", size: 1, maxSize: 2 },
+  };
+
+  it("returns the total difference", () => {
+    expect(
+      getTotalBaselinesDifference({
+        results: mockResults,
+        baselines: mockBaselines,
+      })
+    ).toBe(2);
   });
 });
 
 describe(".getOutputContext", () => {
   describe("when supports color", () => {
-    it("instantiates `chalk` with level 1", () => {
-      expect(getOutputContext(true).colors.level).toBeGreaterThan(0);
+    it("instantiates `chalk` with level greater than 0", () => {
+      expect(
+        getOutputContext({ supportsColor: true }).colors.level
+      ).toBeGreaterThan(0);
     });
   });
 
   describe("when does not support color", () => {
     it("instantiates `chalk` with level 0", () => {
-      expect(getOutputContext(false).colors.level).toBe(0);
+      expect(getOutputContext({ supportsColor: false }).colors.level).toBe(0);
     });
   });
 });

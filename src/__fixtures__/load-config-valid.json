@@ -1,4 +1,4 @@
 {
-  "input": "results.json",
+  "results": "results.json",
   "reporters": ["summary", ["custom", { "banana": "yes", "pineapple": "no" }]]
 }

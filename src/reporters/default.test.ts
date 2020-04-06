@@ -12,7 +12,10 @@ import TableReporter from "./table";
 import { DefaultReporter } from ".";
 
 const results: Results = {
-  foo: { path: "foo.js", size: 1, maxSize: 2 },
+  "foo.js": { path: "foo.js", size: 1, maxSize: 2 },
+};
+const baselines: Results = {
+  "foo.js": { path: "foo.js", size: 2, maxSize: 2 },
 };
 
 describe("DefaultReporter", () => {
@@ -21,7 +24,7 @@ describe("DefaultReporter", () => {
   beforeEach(async () => {
     reporter = new DefaultReporter();
 
-    await reportResults({ results, reporter });
+    await reportResults({ results, baselines, reporter });
   });
 
   describe.each([

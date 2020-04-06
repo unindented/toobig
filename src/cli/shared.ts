@@ -2,7 +2,6 @@ import { cosmiconfigSync } from "cosmiconfig";
 import { existsSync, lstatSync } from "fs-extra";
 import { ParserConfigurationOptions } from "yargs";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const pkg = require("../../package.json") as { name: string };
 
 export const parserConfiguration: ParserConfigurationOptions = {
@@ -30,10 +29,10 @@ export const configParser = (configPath?: string): object => {
     ? explorer.load(configPath)
     : explorer.search(configPath);
 
-  return result != null && typeof result.config === "object"
+  return result !== null && typeof result.config === "object"
     ? (result.config as object)
     : {};
 };
 
 const isFile = (path?: string): path is string =>
-  !!(path && existsSync(path) && lstatSync(path).isFile());
+  Boolean(path && existsSync(path) && lstatSync(path).isFile());

@@ -1,5 +1,5 @@
 import { tmpdir } from "os";
-import { resolve } from "path";
+import { resolve as resolvePath } from "path";
 
 import { configParser } from "./shared";
 
@@ -16,7 +16,7 @@ describe(".configParser", () => {
   });
 
   describe("with a path to a directory containing a config file", () => {
-    const configPath = resolve(__dirname, "../..");
+    const configPath = resolvePath(__dirname, "../..");
 
     it("returns the config", () => {
       expect(configParser(configPath)).toEqual(
@@ -29,7 +29,7 @@ describe(".configParser", () => {
   });
 
   describe("with a path to a config file", () => {
-    const configPath = resolve(__dirname, "../../.toobigrc");
+    const configPath = resolvePath(__dirname, "../../.toobigrc");
 
     it("returns the config", () => {
       expect(configParser(configPath)).toEqual(

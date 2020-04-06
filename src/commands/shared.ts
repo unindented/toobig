@@ -1,4 +1,5 @@
 import { CompositeReporter } from "../reporters";
+import { getInputStream, readInputStream } from "../shared";
 import {
   Reporter,
   ReporterConfig,
@@ -38,18 +39,37 @@ const resolveReporter = (reporterName: string): ReporterConstructor => {
   return module.default;
 };
 
+export const loadResults = async ({
+  results,
+}: {
+  results: string | Results;
+}): Promise<Results> => {
+  if (typeof results !== "string") {
+    return results;
+  }
+
+  const stream = await getInputStream(results);
+  const contents = await readInputStream(stream);
+  return JSON.parse(contents) as Results;
+};
+
 export const reportResults = async ({
   results,
+  baselines,
   reporter,
 }: {
   results: Results;
+  baselines?: Results;
   reporter: Reporter;
 }): Promise<void> => {
   await reporter.onRunStart();
 
   for (const result of Object.values(results)) {
-    await reporter.onResult(result);
+    await reporter.onResult(
+      result,
+      baselines ? baselines[result.path] : undefined
+    );
   }
 
-  await reporter.onRunComplete(results);
+  await reporter.onRunComplete(results, baselines);
 };

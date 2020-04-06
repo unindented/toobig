@@ -8,6 +8,7 @@ Scan current working directory to check for entries over budget, and report them
 Command options:
   --budgets    Budgets to apply when scanning                 [array] [required]
   --cwd        Current working directory to scan         [string] [default: \\".\\"]
+  --baselines  Baseline results file (path or URL)                      [string]
   --reporters  Reporters to process results                              [array]
   --config     Config file, or directory to search for one
                                                          [string] [default: \\".\\"]

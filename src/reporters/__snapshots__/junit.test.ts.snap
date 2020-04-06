@@ -2,11 +2,15 @@
 
 exports[`JUnitReporter with default options with all results under budget writes to output stream with results 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
-<testsuites name=\\"toobig test suites\\" tests=\\"2\\" failures=\\"0\\">
-  <testsuite name=\\"toobig test suite\\" tests=\\"2\\" failures=\\"0\\">
+<testsuites name=\\"toobig test suites\\" tests=\\"4\\" failures=\\"0\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"4\\" failures=\\"0\\">
     <testcase name=\\"foo/bar.js\\" classname=\\"foo/bar.js\\">
     </testcase>
     <testcase name=\\"foo/baz.js\\" classname=\\"foo/baz.js\\">
+    </testcase>
+    <testcase name=\\"foo/qux.js\\" classname=\\"foo/qux.js\\">
+    </testcase>
+    <testcase name=\\"foo/quux.js\\" classname=\\"foo/quux.js\\">
     </testcase>
   </testsuite>
 </testsuites>
@@ -58,11 +62,15 @@ exports[`JUnitReporter with default options with one result over budget writes t
 
 exports[`JUnitReporter with output stream with all results under budget writes to output stream with results 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
-<testsuites name=\\"toobig test suites\\" tests=\\"2\\" failures=\\"0\\">
-  <testsuite name=\\"toobig test suite\\" tests=\\"2\\" failures=\\"0\\">
+<testsuites name=\\"toobig test suites\\" tests=\\"4\\" failures=\\"0\\">
+  <testsuite name=\\"toobig test suite\\" tests=\\"4\\" failures=\\"0\\">
     <testcase name=\\"foo/bar.js\\" classname=\\"foo/bar.js\\">
     </testcase>
     <testcase name=\\"foo/baz.js\\" classname=\\"foo/baz.js\\">
+    </testcase>
+    <testcase name=\\"foo/qux.js\\" classname=\\"foo/qux.js\\">
+    </testcase>
+    <testcase name=\\"foo/quux.js\\" classname=\\"foo/quux.js\\">
     </testcase>
   </testsuite>
 </testsuites>

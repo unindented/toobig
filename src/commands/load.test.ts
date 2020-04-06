@@ -1,9 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("../shared", () => ({
   ...jest.requireActual("../shared"),
   getInputStream: jest.fn().mockName("getInputStream"),
 }));
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("./shared", () => ({
   ...jest.requireActual("./shared"),
   getCompositeReporter: jest.fn().mockName("getCompositeReporter"),
@@ -20,9 +18,13 @@ import { loadAndReport } from "./load";
 import { getCompositeReporter } from "./shared";
 
 describe(".loadAndReport", () => {
-  const input = "results.json";
-  const results: Results = {
+  const mockPath = "results.json";
+  const mockResults: Results = {
     "foo/bar.js": { path: "foo/bar.js", size: 4064, maxSize: 4096 },
+    "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
+  };
+  const mockBaselines: Results = {
+    "foo/bar.js": { path: "foo/bar.js", size: 4032, maxSize: 4096 },
     "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
   };
 
@@ -38,9 +40,9 @@ describe(".loadAndReport", () => {
     (getCompositeReporter as jest.Mock).mockReturnValue(mockReporter);
   });
 
-  describe("with results", () => {
+  describe("with loaded results", () => {
     beforeEach(() => {
-      promise = loadAndReport({ input: results });
+      promise = loadAndReport({ results: mockResults });
     });
 
     it("resolves with results", async () => {
@@ -75,44 +77,89 @@ describe(".loadAndReport", () => {
 
     it("calls `reporter.onRunComplete` once", async () => {
       const { results } = await promise;
-      expect(mockReporter.onRunComplete).toHaveBeenCalledWith(results);
+      expect(mockReporter.onRunComplete).toHaveBeenCalledWith(
+        results,
+        undefined
+      );
     });
   });
 
-  describe("with a path", () => {
+  describe("with loaded results and baselines", () => {
+    beforeEach(() => {
+      promise = loadAndReport({
+        results: mockResults,
+        baselines: mockBaselines,
+      });
+    });
+
+    it("resolves with results", async () => {
+      await expect(promise).resolves.toMatchInlineSnapshot(`
+              Object {
+                "anyOverBudget": false,
+                "results": Object {
+                  "foo/bar.js": Object {
+                    "maxSize": 4096,
+                    "path": "foo/bar.js",
+                    "size": 4064,
+                  },
+                  "foo/baz.js": Object {
+                    "maxSize": 4096,
+                    "path": "foo/baz.js",
+                    "size": 4064,
+                  },
+                },
+              }
+            `);
+    });
+
+    it("calls `reporter.onRunStart` once", async () => {
+      await promise;
+      expect(mockReporter.onRunStart).toHaveBeenCalledTimes(1);
+    });
+
+    it("calls `reporter.onResult` once per result", async () => {
+      await promise;
+      expect(mockReporter.onResult).toHaveBeenCalledTimes(2);
+    });
+
+    it("calls `reporter.onRunComplete` once", async () => {
+      const { results } = await promise;
+      expect(mockReporter.onRunComplete).toHaveBeenCalledWith(
+        results,
+        mockBaselines
+      );
+    });
+  });
+
+  describe("with a results path", () => {
     describe("when `getInputStream` returns a stream that ends succesfully", () => {
       beforeEach(() => {
         const stream = new Readable({ read: noop });
-        stream.push(
-          JSON.stringify([
-            { maxSize: 4096, path: "foo/bar.js", size: 4064 },
-            { maxSize: 4096, path: "foo/baz.js", size: 4064 },
-          ])
-        );
+        stream.push(JSON.stringify(mockResults));
         stream.push(null);
         (getInputStream as jest.Mock).mockResolvedValue(stream);
 
-        promise = loadAndReport({ input });
+        promise = loadAndReport({ results: mockPath });
       });
 
       it("resolves with results", async () => {
         await expect(promise).resolves.toMatchInlineSnapshot(`
-                        Object {
-                          "anyOverBudget": false,
-                          "results": Array [
-                            Object {
-                              "maxSize": 4096,
-                              "path": "foo/bar.js",
-                              "size": 4064,
-                            },
-                            Object {
-                              "maxSize": 4096,
-                              "path": "foo/baz.js",
-                              "size": 4064,
-                            },
-                          ],
-                        }
-                    `);
+                Object {
+                  "anyOverBudget": false,
+                  "results": Object {
+                    "foo/bar.js": Object {
+                      "maxSize": 4096,
+                      "path": "foo/bar.js",
+                      "size": 4064,
+                    },
+                    "foo/baz.js": Object {
+                      "maxSize": 4096,
+                      "path": "foo/baz.js",
+                      "size": 4064,
+                    },
+                  },
+                }
+              `);
       });
 
       it("calls `reporter.onRunStart` once", async () => {
@@ -127,7 +174,10 @@ describe(".loadAndReport", () => {
 
       it("calls `reporter.onRunComplete` once", async () => {
         const { results } = await promise;
-        expect(mockReporter.onRunComplete).toHaveBeenCalledWith(results);
+        expect(mockReporter.onRunComplete).toHaveBeenCalledWith(
+          results,
+          undefined
+        );
       });
     });
 
@@ -139,7 +189,7 @@ describe(".loadAndReport", () => {
         }, 100);
         (getInputStream as jest.Mock).mockResolvedValue(stream);
 
-        promise = loadAndReport({ input });
+        promise = loadAndReport({ results: mockPath });
       });
 
       it("rejects", async () => {
@@ -151,7 +201,7 @@ describe(".loadAndReport", () => {
       beforeEach(() => {
         (getInputStream as jest.Mock).mockRejectedValue(new Error("BOOM"));
 
-        promise = loadAndReport({ input });
+        promise = loadAndReport({ results: mockPath });
       });
 
       it("rejects", async () => {

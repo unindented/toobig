@@ -1,6 +1,6 @@
 jest.mock("../commands/scan");
 
-import { resolve } from "path";
+import { resolve as resolvePath } from "path";
 
 import yargs, { Arguments } from "yargs";
 
@@ -10,7 +10,6 @@ import { ScanConfig } from "../types";
 import * as scanCommand from "./scan";
 import { parserConfiguration } from "./shared";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const pkg = require("../../package.json") as { name: string };
 
 describe("scan", () => {
@@ -108,7 +107,7 @@ describe("scan", () => {
   });
 
   describe("with a config file", () => {
-    const configPath = resolve(
+    const configPath = resolvePath(
       __dirname,
       "../__fixtures__/scan-config-valid.json"
     );
