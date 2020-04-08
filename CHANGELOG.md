@@ -1,3 +1,10 @@
+### [3.0.1](https://github.com/unindented/toobig/compare/v3.0.0...v3.0.1) (2020-04-08)
+
+
+### Bug Fixes
+
+* add `string` as valid type for `baselines` config ([a5287fe](https://github.com/unindented/toobig/commit/a5287fe0380f03756b84df884a976345284c60a8))
+
 ## [3.0.0](https://github.com/unindented/toobig/compare/v2.0.0...v3.0.0) (2020-04-06)
 
 
