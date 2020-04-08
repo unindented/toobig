@@ -1,7 +1,7 @@
 import { Chalk } from "chalk";
 
 export interface CommonConfig {
-  readonly baselines?: Results;
+  readonly baselines?: string | Results;
   readonly reporters?: readonly ReporterConfig[];
 }
 
