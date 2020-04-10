@@ -11,6 +11,9 @@ import {
   endOutputStream,
   getOutputContext,
   getOutputStream,
+  isOverBaseline,
+  isOverBudget,
+  isUnderBaseline,
   supportsColor,
 } from "../shared";
 import {
@@ -194,16 +197,20 @@ const getBodyWithBaselines = ({
   results,
   baselines,
   outputContext,
-}: ResultsWithBaselinesContext): string[][] =>
-  Object.values(results).map((result) => {
+}: ResultsWithBaselinesContext): string[][] => {
+  const isUnderThisBaseline = isUnderBaseline(baselines);
+  const isOverThisBaseline = isOverBaseline(baselines);
+
+  return Object.values(results).map((result) => {
     const baseline = baselines[result.path];
 
     const resultContext = { result, baseline, outputContext };
 
     if (
       !outputContext.verbose &&
-      result.size < result.maxSize &&
-      (baseline === undefined || result.size === baseline.size)
+      !isOverBudget(result) &&
+      !isUnderThisBaseline(result) &&
+      !isOverThisBaseline(result)
     ) {
       return [];
     }
@@ -220,6 +227,7 @@ const getBodyWithBaselines = ({
 
     return [path, baselineSize, size, difference, maxSize];
   });
+};
 
 const getBodyWithoutBaselines = ({
   results,
@@ -228,7 +236,7 @@ const getBodyWithoutBaselines = ({
   Object.values(results).map((result) => {
     const resultContext = { result, outputContext };
 
-    if (!outputContext.verbose && result.size < result.maxSize) {
+    if (!outputContext.verbose && !isOverBudget(result)) {
       return [];
     }
 
