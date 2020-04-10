@@ -1,3 +1,10 @@
+## [3.1.0](https://github.com/unindented/toobig/compare/v3.0.1...v3.1.0) (2020-04-10)
+
+
+### Features
+
+* export types from main file ([a6cda47](https://github.com/unindented/toobig/commit/a6cda47eef1974adbafe38917ca2ead789c5512a))
+
 ### [3.0.1](https://github.com/unindented/toobig/compare/v3.0.0...v3.0.1) (2020-04-08)
 
 
