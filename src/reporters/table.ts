@@ -102,13 +102,11 @@ const columnsConfig: TableUserConfig = {
 
 const getUserConfig = (
   template: Required<TableReporterOptions>["template"]
-): TableUserConfig => {
-  return {
-    ...columnsConfig,
-    border: getBorderCharacters(template),
-    drawHorizontalLine: getDrawHorizontalLine(template),
-  };
-};
+): TableUserConfig => ({
+  ...columnsConfig,
+  border: getBorderCharacters(template),
+  drawHorizontalLine: getDrawHorizontalLine(template),
+});
 
 const jestTemplate: TableBorder = {
   topBody: "-",

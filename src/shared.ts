@@ -146,8 +146,8 @@ const createAxiosStream = async (
   return stream;
 };
 
-export const readInputStream = (stream: InputStream): Promise<string> => {
-  return new Promise((resolve, reject) => {
+export const readInputStream = (stream: InputStream): Promise<string> =>
+  new Promise((resolve, reject) => {
     const contents: string[] = [];
 
     stream.on("data", (data: string | Buffer) => {
@@ -162,4 +162,3 @@ export const readInputStream = (stream: InputStream): Promise<string> => {
       reject(error);
     });
   });
-};

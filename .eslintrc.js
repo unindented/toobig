@@ -56,6 +56,7 @@ module.exports = {
     "@typescript-eslint/return-await": ["error"],
     "@typescript-eslint/switch-exhaustiveness-check": ["error"],
     "array-callback-return": ["error"],
+    "arrow-body-style": ["error"],
     "block-scoped-var": ["error"],
     "callback-return": ["error"],
     "complexity": ["error", 6],
