@@ -1,3 +1,10 @@
+## [3.2.0](https://github.com/unindented/toobig/compare/v3.1.0...v3.2.0) (2020-04-10)
+
+
+### Features
+
+* allow reducing verbosity of table reporter ([b3d5361](https://github.com/unindented/toobig/commit/b3d5361c9badc570769cdabdfc12a8e6a36a549e))
+
 ## [3.1.0](https://github.com/unindented/toobig/compare/v3.0.1...v3.1.0) (2020-04-10)
 
 
