@@ -1,3 +1,10 @@
+### [3.3.1](https://github.com/unindented/toobig/compare/v3.3.0...v3.3.1) (2020-04-10)
+
+
+### Bug Fixes
+
+* fix filtering of table rows when `verbose: false` ([ff09709](https://github.com/unindented/toobig/commit/ff09709a12cdfe5656bbd5d03d3b67b24761912b))
+
 ## [3.3.0](https://github.com/unindented/toobig/compare/v3.2.0...v3.3.0) (2020-04-10)
 
 
