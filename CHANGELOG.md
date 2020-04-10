@@ -1,3 +1,10 @@
+## [3.3.0](https://github.com/unindented/toobig/compare/v3.2.0...v3.3.0) (2020-04-10)
+
+
+### Features
+
+* return whether any results were under or over the baseline results ([0e903ad](https://github.com/unindented/toobig/commit/0e903ad2ee9f26ff9cd91221fa07eb2387e6658b))
+
 ## [3.2.0](https://github.com/unindented/toobig/compare/v3.1.0...v3.2.0) (2020-04-10)
 
 
