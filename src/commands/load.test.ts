@@ -12,7 +12,7 @@ import { Readable } from "stream";
 import noop from "lodash/noop";
 
 import { getInputStream } from "../shared";
-import { Reporter, Results, ReturnValue } from "../types";
+import { Reporter, Results, ReturnValues } from "../types";
 
 import { loadAndReport } from "./load";
 import { getCompositeReporter } from "./shared";
@@ -28,7 +28,7 @@ describe(".loadAndReport", () => {
     "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
   };
 
-  let promise: Promise<ReturnValue>;
+  let promise: Promise<ReturnValues>;
   let mockReporter: Reporter;
 
   beforeEach(() => {
@@ -48,7 +48,9 @@ describe(".loadAndReport", () => {
     it("resolves with results", async () => {
       await expect(promise).resolves.toMatchInlineSnapshot(`
               Object {
+                "anyOverBaseline": false,
                 "anyOverBudget": false,
+                "anyUnderBaseline": false,
                 "results": Object {
                   "foo/bar.js": Object {
                     "maxSize": 4096,
@@ -95,7 +97,9 @@ describe(".loadAndReport", () => {
     it("resolves with results", async () => {
       await expect(promise).resolves.toMatchInlineSnapshot(`
               Object {
+                "anyOverBaseline": true,
                 "anyOverBudget": false,
+                "anyUnderBaseline": false,
                 "results": Object {
                   "foo/bar.js": Object {
                     "maxSize": 4096,
@@ -145,7 +149,9 @@ describe(".loadAndReport", () => {
       it("resolves with results", async () => {
         await expect(promise).resolves.toMatchInlineSnapshot(`
                 Object {
+                  "anyOverBaseline": false,
                   "anyOverBudget": false,
+                  "anyUnderBaseline": false,
                   "results": Object {
                     "foo/bar.js": Object {
                       "maxSize": 4096,

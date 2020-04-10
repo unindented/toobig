@@ -9,7 +9,7 @@ jest.mock("./shared", () => ({
 
 import getFolderSize from "get-folder-size";
 
-import { BudgetsConfig, Reporter, Results, ReturnValue } from "../types";
+import { BudgetsConfig, Reporter, Results, ReturnValues } from "../types";
 
 import { scanAndReport } from "./scan";
 import { getCompositeReporter } from "./shared";
@@ -24,7 +24,7 @@ describe(".scanAndReport", () => {
     "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
   };
 
-  let promise: Promise<ReturnValue>;
+  let promise: Promise<ReturnValues>;
   let mockReporter: Reporter;
 
   beforeEach(() => {
@@ -48,7 +48,9 @@ describe(".scanAndReport", () => {
     it("resolves with results", async () => {
       await expect(promise).resolves.toMatchInlineSnapshot(`
               Object {
+                "anyOverBaseline": false,
                 "anyOverBudget": false,
+                "anyUnderBaseline": false,
                 "results": Object {
                   "foo/bar.js": Object {
                     "maxSize": 4096,
@@ -99,7 +101,9 @@ describe(".scanAndReport", () => {
     it("resolves with results", async () => {
       await expect(promise).resolves.toMatchInlineSnapshot(`
               Object {
+                "anyOverBaseline": true,
                 "anyOverBudget": false,
+                "anyUnderBaseline": false,
                 "results": Object {
                   "foo/bar.js": Object {
                     "maxSize": 4096,

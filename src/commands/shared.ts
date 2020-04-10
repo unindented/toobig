@@ -1,10 +1,18 @@
 import { CompositeReporter } from "../reporters";
-import { getInputStream, readInputStream } from "../shared";
+import {
+  filterResults,
+  getInputStream,
+  isOverBaseline,
+  isOverBudget,
+  isUnderBaseline,
+  readInputStream,
+} from "../shared";
 import {
   Reporter,
   ReporterConfig,
   ReporterConstructor,
   Results,
+  ReturnValues,
 } from "../types";
 
 export const getCompositeReporter = (
@@ -72,4 +80,30 @@ export const reportResults = async ({
   }
 
   await reporter.onRunComplete(results, baselines);
+};
+
+export const getReturnValues = ({
+  results,
+  baselines,
+}: {
+  results: Results;
+  baselines?: Results;
+}): ReturnValues => {
+  const resultsUnderBaseline = filterResults(
+    results,
+    isUnderBaseline(baselines)
+  );
+  const resultsOverBaseline = filterResults(results, isOverBaseline(baselines));
+  const resultsOverBudget = filterResults(results, isOverBudget);
+
+  const anyUnderBaseline = Object.keys(resultsUnderBaseline).length > 0;
+  const anyOverBaseline = Object.keys(resultsOverBaseline).length > 0;
+  const anyOverBudget = Object.keys(resultsOverBudget).length > 0;
+
+  return {
+    results,
+    anyUnderBaseline,
+    anyOverBaseline,
+    anyOverBudget,
+  };
 };

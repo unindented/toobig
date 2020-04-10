@@ -1,9 +1,9 @@
 import { resolve as resolvePath } from "path";
 
 import { CompositeReporter } from "../reporters";
-import { Reporter, Results } from "../types";
+import { Reporter, Results, ReturnValues } from "../types";
 
-import { getCompositeReporter, reportResults } from "./shared";
+import { getCompositeReporter, getReturnValues, reportResults } from "./shared";
 
 describe(".getCompositeReporter", () => {
   it("returns a composite reporter", () => {
@@ -81,6 +81,45 @@ describe(".reportResults", () => {
         mockResults,
         mockBaselines
       );
+    });
+  });
+});
+
+describe(".getReturnValues", () => {
+  const mockResults: Results = {
+    "foo/bar.js": { path: "foo/bar.js", size: 4064, maxSize: 4096 },
+    "foo/baz.js": { path: "foo/baz.js", size: 4224, maxSize: 4096 },
+    "foo/qux.js": { path: "foo/baz.js", size: 4032, maxSize: 4096 },
+  };
+
+  let returnValues: ReturnValues;
+
+  describe("without baselines", () => {
+    beforeEach(() => {
+      returnValues = getReturnValues({ results: mockResults });
+    });
+
+    it("returns the corresponding values", () => {
+      expect(returnValues).toMatchSnapshot();
+    });
+  });
+
+  describe("with baselines", () => {
+    const mockBaselines: Results = {
+      "foo/bar.js": { path: "foo/bar.js", size: 4224, maxSize: 4096 },
+      "foo/baz.js": { path: "foo/baz.js", size: 4064, maxSize: 4096 },
+      "foo/qux.js": { path: "foo/qux.js", size: 4032, maxSize: 4096 },
+    };
+
+    beforeEach(() => {
+      returnValues = getReturnValues({
+        results: mockResults,
+        baselines: mockBaselines,
+      });
+    });
+
+    it("returns the corresponding values", () => {
+      expect(returnValues).toMatchSnapshot();
     });
   });
 });

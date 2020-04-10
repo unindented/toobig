@@ -5,21 +5,25 @@ import glob from "fast-glob";
 import getFolderSize from "get-folder-size";
 
 import { scanConfigSchema } from "../schemas";
-import { isOverBudget } from "../shared";
 import {
   BudgetsConfig,
   Result,
   Results,
-  ReturnValue,
+  ReturnValues,
   ScanConfig,
   WritableResults,
 } from "../types";
 
-import { getCompositeReporter, loadResults, reportResults } from "./shared";
+import {
+  getCompositeReporter,
+  getReturnValues,
+  loadResults,
+  reportResults,
+} from "./shared";
 
 export const scanAndReport = async (
   config: ScanConfig
-): Promise<ReturnValue> => {
+): Promise<ReturnValues> => {
   await scanConfigSchema.validateAsync(config);
 
   const {
@@ -40,8 +44,10 @@ export const scanAndReport = async (
     reporter: compositeReporter,
   });
 
-  const anyOverBudget = Object.values(scannedResults).some(isOverBudget);
-  return { results: scannedResults, anyOverBudget };
+  return getReturnValues({
+    results: scannedResults,
+    baselines: baselineResults,
+  });
 };
 
 const scanResults = async ({

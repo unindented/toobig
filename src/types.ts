@@ -36,9 +36,11 @@ export interface Result {
   readonly maxSize: number;
 }
 
-export interface ReturnValue {
+export interface ReturnValues {
   readonly results: Results;
   readonly anyOverBudget: boolean;
+  readonly anyUnderBaseline: boolean;
+  readonly anyOverBaseline: boolean;
 }
 
 export type InputStream = NodeJS.ReadableStream;

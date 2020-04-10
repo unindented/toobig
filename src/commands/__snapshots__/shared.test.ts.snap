@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`.getReturnValues with baselines returns the corresponding values 1`] = `
+Object {
+  "anyOverBaseline": true,
+  "anyOverBudget": true,
+  "anyUnderBaseline": true,
+  "results": Object {
+    "foo/bar.js": Object {
+      "maxSize": 4096,
+      "path": "foo/bar.js",
+      "size": 4064,
+    },
+    "foo/baz.js": Object {
+      "maxSize": 4096,
+      "path": "foo/baz.js",
+      "size": 4224,
+    },
+    "foo/qux.js": Object {
+      "maxSize": 4096,
+      "path": "foo/baz.js",
+      "size": 4032,
+    },
+  },
+}
+`;
+
+exports[`.getReturnValues without baselines returns the corresponding values 1`] = `
+Object {
+  "anyOverBaseline": false,
+  "anyOverBudget": true,
+  "anyUnderBaseline": false,
+  "results": Object {
+    "foo/bar.js": Object {
+      "maxSize": 4096,
+      "path": "foo/bar.js",
+      "size": 4064,
+    },
+    "foo/baz.js": Object {
+      "maxSize": 4096,
+      "path": "foo/baz.js",
+      "size": 4224,
+    },
+    "foo/qux.js": Object {
+      "maxSize": 4096,
+      "path": "foo/baz.js",
+      "size": 4032,
+    },
+  },
+}
+`;

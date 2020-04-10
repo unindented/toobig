@@ -1,12 +1,16 @@
 import { loadConfigSchema } from "../schemas";
-import { isOverBudget } from "../shared";
-import { LoadConfig, ReturnValue } from "../types";
+import { LoadConfig, ReturnValues } from "../types";
 
-import { getCompositeReporter, loadResults, reportResults } from "./shared";
+import {
+  getCompositeReporter,
+  getReturnValues,
+  loadResults,
+  reportResults,
+} from "./shared";
 
 export const loadAndReport = async (
   config: LoadConfig
-): Promise<ReturnValue> => {
+): Promise<ReturnValues> => {
   await loadConfigSchema.validateAsync(config);
 
   const { results, baselines, reporters = ["default"] } = config;
@@ -16,12 +20,15 @@ export const loadAndReport = async (
   const baselineResults = baselines
     ? await loadResults({ results: baselines })
     : undefined;
-  await reportResults({
+  const context = {
     results: loadedResults,
     baselines: baselineResults,
     reporter: compositeReporter,
-  });
+  };
+  await reportResults(context);
 
-  const anyOverBudget = Object.values(loadedResults).some(isOverBudget);
-  return { results: loadedResults, anyOverBudget };
+  return getReturnValues({
+    results: loadedResults,
+    baselines: baselineResults,
+  });
 };
