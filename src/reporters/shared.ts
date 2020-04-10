@@ -134,14 +134,14 @@ const truncateString = (str: string, maxLength: number): string =>
 
 export const formatPath = ({
   result: { path },
-  outputContext: { colors, maxLength },
+  outputContext: { colors, maxPathLength },
 }: ResultContext): string => {
   const relativePath = relative(process.cwd(), path);
   const dir = dirname(relativePath);
   const dirWithSep = dir !== "." ? dir + sep : "";
   const base = truncateString(
     basename(relativePath),
-    maxLength - dirWithSep.length
+    maxPathLength - dirWithSep.length
   );
   return `${colors.dim(dirWithSep)}${colors.bold(base)}`;
 };

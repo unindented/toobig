@@ -87,13 +87,16 @@ export const getTotalBaselinesDifference = ({
 
 export const getOutputContext = ({
   supportsColor,
-  maxLength = Infinity,
+  maxPathLength = Infinity,
+  verbose = true,
 }: {
   supportsColor: boolean;
-  maxLength?: number;
+  maxPathLength?: number;
+  verbose?: boolean;
 }): OutputContext => ({
   colors: new ChalkInstance(!supportsColor ? { level: 0 } : undefined),
-  maxLength,
+  maxPathLength,
+  verbose,
 });
 
 export const getOutputStream = (

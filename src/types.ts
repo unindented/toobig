@@ -58,7 +58,8 @@ export interface Reporter {
 export interface OutputContext {
   readonly colors: Chalk;
   readonly colorOverride?: Chalk;
-  readonly maxLength: number;
+  readonly maxPathLength: number;
+  readonly verbose: boolean;
 }
 
 export interface ResultsContext {

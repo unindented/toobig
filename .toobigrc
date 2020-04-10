@@ -12,6 +12,7 @@
         "template": "markdown",
         "color": false,
         "maxPathLength": 36,
+        "verbose": false,
         "output": "toobig/report.md"
       }
     ],

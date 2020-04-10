@@ -40,6 +40,7 @@ export interface TableReporterOptions {
   readonly template?: TableBorderTemplate | "jest" | "markdown";
   readonly color?: boolean;
   readonly maxPathLength?: number;
+  readonly verbose?: boolean;
   readonly output?: string | NodeJS.WritableStream;
 }
 
@@ -53,13 +54,15 @@ export default class TableReporter implements Reporter {
     template = "jest",
     color = Boolean(supportsColor),
     maxPathLength = Infinity,
+    verbose = true,
     output = "stdout",
   }: TableReporterOptions = {}) {
     this.template = template;
     this.userConfig = getUserConfig(template);
     this.outputContext = getOutputContext({
       supportsColor: color,
-      maxLength: maxPathLength,
+      maxPathLength,
+      verbose,
     });
     this.outputStream = getOutputStream(output);
   }
@@ -182,9 +185,10 @@ const getBody = ({
   baselines,
   outputContext,
 }: ResultsContext): readonly string[][] =>
-  baselines
+  (baselines
     ? getBodyWithBaselines({ results, baselines, outputContext })
-    : getBodyWithoutBaselines({ results, outputContext });
+    : getBodyWithoutBaselines({ results, outputContext })
+  ).filter((row) => row.length > 0);
 
 const getBodyWithBaselines = ({
   results,
@@ -195,6 +199,14 @@ const getBodyWithBaselines = ({
     const baseline = baselines[result.path];
 
     const resultContext = { result, baseline, outputContext };
+
+    if (
+      !outputContext.verbose &&
+      result.size < result.maxSize &&
+      (baseline === undefined || result.size === baseline.size)
+    ) {
+      return [];
+    }
 
     const path = formatPath(resultContext);
     const baselineSize = formatBaselineSize(resultContext);
@@ -215,6 +227,10 @@ const getBodyWithoutBaselines = ({
 }: ResultsContext): string[][] =>
   Object.values(results).map((result) => {
     const resultContext = { result, outputContext };
+
+    if (!outputContext.verbose && result.size < result.maxSize) {
+      return [];
+    }
 
     const path = formatPath(resultContext);
     const size = formatSize(resultContext);

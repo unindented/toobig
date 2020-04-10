@@ -32,7 +32,8 @@ let mockOutputContext: OutputContext;
 beforeEach(() => {
   mockOutputContext = {
     colors: new ChalkInstance({ level: 1 }),
-    maxLength: Infinity,
+    maxPathLength: Infinity,
+    verbose: true,
   };
 });
 
@@ -478,7 +479,7 @@ describe(".formatPath", () => {
           result: mockResult,
           outputContext: {
             ...mockOutputContext,
-            maxLength: 10,
+            maxPathLength: 10,
           },
         })
       ).toMatchInlineSnapshot(`"[2mfoo/[22m[1mbar.js[22m"`);
@@ -494,7 +495,7 @@ describe(".formatPath", () => {
           result: mockResult,
           outputContext: {
             ...mockOutputContext,
-            maxLength: 10,
+            maxPathLength: 10,
           },
         })
       ).toMatchInlineSnapshot(`"[2mfoo/[22m[1mbarba…[22m"`);

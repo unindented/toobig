@@ -262,3 +262,62 @@ exports[`TableReporter without color with one result over budget writes to outpu
 
 "
 `;
+
+exports[`TableReporter without verbosity with all results under budget writes to output stream with results 1`] = `
+"------|---------|----------
+ [1mPath[22m |    [1mSize[22m | [1mMax Size[22m 
+------|---------|----------
+      | [1m15.81KB[22m |          
+------|---------|----------
+
+"
+`;
+
+exports[`TableReporter without verbosity with baselines writes to output stream with results 1`] = `
+"------------|-----------|----------|------------|----------
+ [1mPath[22m       | [1mBase Size[22m | [1mNew Size[22m | [1mDifference[22m | [1mMax Size[22m 
+------------|-----------|----------|------------|----------
+ [2mfoo/[22m[1mbar.js[22m |    3.94KB |   3.97KB |      32B [31m▲[39m |    4KB [32m✓[39m 
+ [2mfoo/[22m[1mqux.js[22m |    3.97KB |   3.94KB |     -32B [32m▼[39m |    4KB [32m✓[39m 
+------------|-----------|----------|------------|----------
+            |   [1m11.88KB[22m |  [1m15.81KB[22m |   [1m3.94KB [31m▲[39m[22m |          
+------------|-----------|----------|------------|----------
+
+"
+`;
+
+exports[`TableReporter without verbosity with multiple results over budget writes to output stream with results 1`] = `
+"-------------|---------|----------
+ [1mPath[22m        |    [1mSize[22m | [1mMax Size[22m 
+-------------|---------|----------
+ [2mfoo/[22m[1mbaz.js[22m  |  4.13KB |    4KB [31m✗[39m 
+ [2mfoo/[22m[1mqux.js[22m  |  4.16KB |    4KB [31m✗[39m 
+ [2mfoo/[22m[1mquux.js[22m |  4.13KB |    4KB [31m✗[39m 
+-------------|---------|----------
+             | [1m16.38KB[22m |          
+-------------|---------|----------
+
+"
+`;
+
+exports[`TableReporter without verbosity with no results writes to output stream with results 1`] = `
+"------|------|----------
+ [1mPath[22m | [1mSize[22m | [1mMax Size[22m 
+------|------|----------
+      |   [1m0B[22m |          
+------|------|----------
+
+"
+`;
+
+exports[`TableReporter without verbosity with one result over budget writes to output stream with results 1`] = `
+"------------|--------|----------
+ [1mPath[22m       |   [1mSize[22m | [1mMax Size[22m 
+------------|--------|----------
+ [2mfoo/[22m[1mbaz.js[22m | 4.13KB |    4KB [31m✗[39m 
+------------|--------|----------
+            | [1m8.09KB[22m |          
+------------|--------|----------
+
+"
+`;

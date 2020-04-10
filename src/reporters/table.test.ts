@@ -35,6 +35,7 @@ describe("TableReporter", () => {
   describe.each([
     ["with default options", undefined],
     ["without color", { color: false }],
+    ["without verbosity", { verbose: false }],
     ["with template `markdown`", { template: "markdown" as const }],
     ["with template `ramac`", { template: "ramac" as const }],
   ])("%s", (_desc1, options) => {
