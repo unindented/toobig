@@ -1,3 +1,10 @@
+### [3.3.2](https://github.com/unindented/toobig/compare/v3.3.1...v3.3.2) (2020-07-10)
+
+
+### Bug Fixes
+
+* package.json & package-lock.json to reduce vulnerabilities ([#11](https://github.com/unindented/toobig/issues/11)) ([f91dce9](https://github.com/unindented/toobig/commit/f91dce9e8f059bf06c5ee028dd92ac149956059d))
+
 ### [3.3.1](https://github.com/unindented/toobig/compare/v3.3.0...v3.3.1) (2020-04-10)
 
 
