@@ -1,0 +1,10 @@
+{
+  "name": "multi-project",
+  "private": true,
+  "scripts": {
+    "test": "toobig"
+  },
+  "devDependencies": {
+    "toobig": "file:../../"
+  }
+}

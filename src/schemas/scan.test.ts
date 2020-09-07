@@ -43,4 +43,13 @@ describe("scanConfigSchema", () => {
       `[ValidationError: "reporters[0]" must be one of [string, array]]`
     );
   });
+
+  it("rejects a config with invalid projects", () => {
+    const config = require("../__fixtures__/scan-config-invalid-projects.json") as object;
+    const { error } = scanConfigSchema.validate(config);
+
+    expect(error).toMatchInlineSnapshot(
+      `[ValidationError: "projects[0]" must be a string]`
+    );
+  });
 });

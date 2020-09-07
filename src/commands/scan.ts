@@ -7,11 +7,11 @@ import getFolderSize from "get-folder-size";
 import { scanConfigSchema } from "../schemas";
 import {
   BudgetsConfig,
-  Result,
+  Entry,
   Results,
   ReturnValues,
   ScanConfig,
-  WritableResults,
+  WritableEntries,
 } from "../types";
 
 import {
@@ -27,14 +27,14 @@ export const scanAndReport = async (
   await scanConfigSchema.validateAsync(config);
 
   const {
+    projectDir = process.cwd(),
     budgets,
-    cwd = process.cwd(),
     baselines,
     reporters = ["default"],
   } = config;
   const compositeReporter = getCompositeReporter(reporters);
 
-  const scannedResults = await scanResults({ budgets, cwd });
+  const scannedResults = await scanResults({ projectDir, budgets });
   const baselineResults = baselines
     ? await loadResults({ results: baselines })
     : undefined;
@@ -51,32 +51,32 @@ export const scanAndReport = async (
 };
 
 const scanResults = async ({
+  projectDir,
   budgets,
-  cwd,
 }: {
+  projectDir: string;
   budgets: BudgetsConfig;
-  cwd: string;
 }): Promise<Results> => {
-  const results: WritableResults = {};
+  const entries: WritableEntries = {};
 
   for (const budget of Object.keys(budgets)) {
     const maxSize = bytes(budgets[budget]);
-    const paths = await glob(budget, { cwd, onlyFiles: false });
+    const paths = await glob(budget, { cwd: projectDir, onlyFiles: false });
 
     for (const path of paths) {
-      const result: Result = {
+      const entry: Entry = {
         path: path.toString(),
-        size: await getSize(resolvePath(cwd, path.toString())),
+        size: await getSize(resolvePath(projectDir, path.toString())),
         maxSize,
       };
 
-      if (results[path] === undefined || results[path].maxSize > maxSize) {
-        results[path] = result;
+      if (entries[path] === undefined || entries[path].maxSize > maxSize) {
+        entries[path] = entry;
       }
     }
   }
 
-  return results;
+  return entries;
 };
 
 const getSize = (path: string): Promise<number> =>

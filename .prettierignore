@@ -1,5 +1,5 @@
-/coverage/
-/dist/
-/node_modules/
-/toobig/
-/package-lock.json
+coverage/
+dist/
+node_modules/
+toobig/
+package-lock.json

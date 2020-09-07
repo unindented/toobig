@@ -1,5 +1,5 @@
-/.jest/
-/coverage/
-/dist/
-/node_modules/
-/toobig/
+.jest/
+coverage/
+dist/
+node_modules/
+report.*

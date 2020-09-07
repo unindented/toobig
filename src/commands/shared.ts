@@ -8,11 +8,14 @@ import {
   readInputStream,
 } from "../shared";
 import {
+  MultiProjectResults,
+  ProjectResults,
   Reporter,
   ReporterConfig,
   ReporterConstructor,
   Results,
   ReturnValues,
+  isSimpleProjectResults,
 } from "../types";
 
 export const getCompositeReporter = (
@@ -50,15 +53,15 @@ const resolveReporter = (reporterName: string): ReporterConstructor => {
 export const loadResults = async ({
   results,
 }: {
-  results: string | Results;
-}): Promise<Results> => {
+  results: string | ProjectResults;
+}): Promise<ProjectResults> => {
   if (typeof results !== "string") {
     return results;
   }
 
   const stream = await getInputStream(results);
   const contents = await readInputStream(stream);
-  return JSON.parse(contents) as Results;
+  return JSON.parse(contents) as ProjectResults;
 };
 
 export const reportResults = async ({
@@ -66,13 +69,22 @@ export const reportResults = async ({
   baselines,
   reporter,
 }: {
-  results: Results;
-  baselines?: Results;
+  results: ProjectResults;
+  baselines?: ProjectResults;
   reporter: Reporter;
 }): Promise<void> => {
   await reporter.onRunStart();
 
-  for (const result of Object.values(results)) {
+  const newResults: MultiProjectResults = isSimpleProjectResults(results)
+    ? { projects: [results] }
+    : results;
+  const newBaselines: MultiProjectResults = baselines
+    ? isSimpleProjectResults(baselines)
+      ? { projects: [baselines] }
+      : baselines
+    : undefined;
+
+  for (const result of Object.values(results.entries)) {
     await reporter.onResult(
       result,
       baselines ? baselines[result.path] : undefined
@@ -86,19 +98,19 @@ export const getReturnValues = ({
   results,
   baselines,
 }: {
-  results: Results;
-  baselines?: Results;
+  results: ProjectResults;
+  baselines?: ProjectResults;
 }): ReturnValues => {
-  const resultsUnderBaseline = filterResults(
+  const entriesUnderBaseline = filterResults(
     results,
     isUnderBaseline(baselines)
   );
-  const resultsOverBaseline = filterResults(results, isOverBaseline(baselines));
-  const resultsOverBudget = filterResults(results, isOverBudget);
+  const entriesOverBaseline = filterResults(results, isOverBaseline(baselines));
+  const entriesOverBudget = filterResults(results, isOverBudget);
 
-  const anyUnderBaseline = Object.keys(resultsUnderBaseline).length > 0;
-  const anyOverBaseline = Object.keys(resultsOverBaseline).length > 0;
-  const anyOverBudget = Object.keys(resultsOverBudget).length > 0;
+  const anyUnderBaseline = Object.keys(entriesUnderBaseline).length > 0;
+  const anyOverBaseline = Object.keys(entriesOverBaseline).length > 0;
+  const anyOverBudget = Object.keys(entriesOverBudget).length > 0;
 
   return {
     results,

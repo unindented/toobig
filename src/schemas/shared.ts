@@ -15,3 +15,5 @@ export const resultsConfigSchema = Joi.object().pattern(
     maxSize: Joi.number().required(),
   }).required()
 );
+
+export const projectsConfigSchema = Joi.array().items(Joi.string().required());

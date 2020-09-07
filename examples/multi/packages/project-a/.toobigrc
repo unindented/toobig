@@ -1,0 +1,6 @@
+{
+  "projectName": "project-a",
+  "budgets": {
+    "some-dir/*.js": "20B",
+  }
+}

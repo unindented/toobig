@@ -1,0 +1,10 @@
+{
+  "name": "simple-project",
+  "private": true,
+  "scripts": {
+    "test": "toobig"
+  },
+  "devDependencies": {
+    "toobig": "file:../../"
+  }
+}
