@@ -50,7 +50,7 @@
     "fs-extra": "^9.0.0",
     "get-folder-size": "^2.0.1",
     "lodash": "^4.17.16",
-    "table": "^5.4.6",
+    "table": "^6.0.0",
     "terminal-link": "^2.1.1",
     "yargs": "^15.3.1"
   },
