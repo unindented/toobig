@@ -228,7 +228,7 @@ npm run watch:unit
 ## Contributors
 
 - Daniel Perez Alvarez (<https://github.com/unindented>)
-- Ben Lakey (<https://github.com/dreadwail>)
+- Dreadwail (<https://github.com/dreadwail>)
 
 ## License
 
