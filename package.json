@@ -22,7 +22,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=10",
+    "node": ">=14",
     "npm": ">=6"
   },
   "scripts": {
@@ -64,7 +64,7 @@
     "@types/get-folder-size": "^2.0.0",
     "@types/jest": "^27.4.0",
     "@types/lodash": "^4.14.178",
-    "@types/node": "^12.20.43",
+    "@types/node": "^14.18.10",
     "@types/table": "^5.0.0",
     "@types/yargs": "^15.0.14",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
