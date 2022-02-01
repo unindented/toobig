@@ -1,10 +1,12 @@
 jest.mock(
   "terminal-link",
-  () => (
-    _text: string,
-    _url: string,
-    { fallback }: { fallback: () => string }
-  ): string => fallback()
+  () =>
+    (
+      _text: string,
+      _url: string,
+      { fallback }: { fallback: () => string }
+    ): string =>
+      fallback()
 );
 
 import { Instance as ChalkInstance } from "chalk";

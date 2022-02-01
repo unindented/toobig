@@ -9,7 +9,8 @@ describe("loadConfigSchema", () => {
   });
 
   it("rejects a config without results", () => {
-    const config = require("../__fixtures__/load-config-no-results.json") as object;
+    const config =
+      require("../__fixtures__/load-config-no-results.json") as object;
     const { error } = loadConfigSchema.validate(config);
 
     expect(error).toMatchInlineSnapshot(
@@ -18,7 +19,8 @@ describe("loadConfigSchema", () => {
   });
 
   it("rejects a config with invalid results", () => {
-    const config = require("../__fixtures__/load-config-invalid-results.json") as object;
+    const config =
+      require("../__fixtures__/load-config-invalid-results.json") as object;
     const { error } = loadConfigSchema.validate(config);
 
     expect(error).toMatchInlineSnapshot(
@@ -27,7 +29,8 @@ describe("loadConfigSchema", () => {
   });
 
   it("rejects a config with invalid reporters", () => {
-    const config = require("../__fixtures__/load-config-invalid-reporters.json") as object;
+    const config =
+      require("../__fixtures__/load-config-invalid-reporters.json") as object;
     const { error } = loadConfigSchema.validate(config);
 
     expect(error).toMatchInlineSnapshot(
