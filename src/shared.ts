@@ -30,27 +30,27 @@ export const getBaselineDifference = ({
 }: Pick<ResultContext, "result" | "baseline">): number =>
   result.size - (baseline ? baseline.size : 0);
 
-export const isUnderBaseline = (baselines?: Results) => (
-  result: Result
-): boolean => {
-  if (baselines === undefined) {
-    return false;
-  }
+export const isUnderBaseline =
+  (baselines?: Results) =>
+  (result: Result): boolean => {
+    if (baselines === undefined) {
+      return false;
+    }
 
-  const baseline = baselines[result.path];
-  return getBaselineDifference({ result, baseline }) < 0;
-};
+    const baseline = baselines[result.path];
+    return getBaselineDifference({ result, baseline }) < 0;
+  };
 
-export const isOverBaseline = (baselines?: Results) => (
-  result: Result
-): boolean => {
-  if (baselines === undefined) {
-    return false;
-  }
+export const isOverBaseline =
+  (baselines?: Results) =>
+  (result: Result): boolean => {
+    if (baselines === undefined) {
+      return false;
+    }
 
-  const baseline = baselines[result.path];
-  return getBaselineDifference({ result, baseline }) > 0;
-};
+    const baseline = baselines[result.path];
+    return getBaselineDifference({ result, baseline }) > 0;
+  };
 
 export const filterResults = (
   results: Results,

@@ -12,9 +12,12 @@ import { Reporter, Results } from "../types";
 import { SummaryReporter } from ".";
 
 const noResults: Results = {};
-const resultsBaselines = require("../__fixtures__/results-baselines.json") as Results;
-const resultsMultipleOver = require("../__fixtures__/results-multiple-over.json") as Results;
-const resultsOneOver = require("../__fixtures__/results-one-over.json") as Results;
+const resultsBaselines =
+  require("../__fixtures__/results-baselines.json") as Results;
+const resultsMultipleOver =
+  require("../__fixtures__/results-multiple-over.json") as Results;
+const resultsOneOver =
+  require("../__fixtures__/results-one-over.json") as Results;
 const resultsUnder = require("../__fixtures__/results-under.json") as Results;
 
 describe("SummaryReporter", () => {

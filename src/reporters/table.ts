@@ -159,13 +159,15 @@ const getBorderCharacters = (
     ? markdownTemplate
     : getBorderCharactersBuiltin(template);
 
-const getDrawHorizontalLine = (
-  template: Required<TableReporterOptions>["template"]
-): TableDrawHorizontalLine => (index: number, size: number): boolean =>
-  index === 0 ||
-  index === 1 ||
-  (template !== "markdown" && index === size - 1) ||
-  index === size;
+const getDrawHorizontalLine =
+  (
+    template: Required<TableReporterOptions>["template"]
+  ): TableDrawHorizontalLine =>
+  (index: number, size: number): boolean =>
+    index === 0 ||
+    index === 1 ||
+    (template !== "markdown" && index === size - 1) ||
+    index === size;
 
 const headerWithBaselines = [
   "Path",
@@ -313,6 +315,7 @@ const fixMarkdownAlignment = (
   let index = 0;
 
   return output.replace(regex, (match) => {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const columnAlignment = columns[index]?.alignment;
     const needsReplacing =
       columnAlignment === alignment ||

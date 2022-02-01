@@ -39,8 +39,10 @@ const resolveReporter = (reporterName: string): ReporterConstructor => {
   let module: { default: ReporterConstructor };
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     module = require(`../reporters/${reporterName}`);
   } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     module = require(reporterName);
   }
 

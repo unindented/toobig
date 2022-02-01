@@ -70,6 +70,7 @@ const scanResults = async ({
         maxSize,
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (results[path] === undefined || results[path].maxSize > maxSize) {
         results[path] = result;
       }

@@ -1,5 +1,7 @@
-jest.mock("fast-glob", () => (): Promise<readonly string[]> =>
-  Promise.resolve(["foo/bar.js", "foo/baz.js"])
+jest.mock(
+  "fast-glob",
+  () => (): Promise<readonly string[]> =>
+    Promise.resolve(["foo/bar.js", "foo/baz.js"])
 );
 jest.mock("get-folder-size");
 jest.mock("./shared", () => ({
