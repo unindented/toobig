@@ -1,3 +1,11 @@
+## [3.4.0](https://github.com/unindented/toobig/compare/v3.3.2...v3.4.0) (2022-02-02)
+
+
+### Features
+
+* drop support for Node <14 ([#40](https://github.com/unindented/toobig/issues/40)) ([a6f6416](https://github.com/unindented/toobig/commit/a6f64161dfff61be31fceb585882c42d5e6466ec))
+* update dev dependencies ([#39](https://github.com/unindented/toobig/issues/39)) ([8bc64c2](https://github.com/unindented/toobig/commit/8bc64c279d7da9baf46c16b1053e9c02b0bc12ed))
+
 ### [3.3.2](https://github.com/unindented/toobig/compare/v3.3.1...v3.3.2) (2020-07-10)
 
 
