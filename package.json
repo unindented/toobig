@@ -48,7 +48,7 @@
     "fast-glob": "^3.2.11",
     "fs-extra": "^9.0.0",
     "get-folder-size": "^2.0.1",
-    "joi": "^17.6.0",
+    "joi": "^17.6.1",
     "lodash": "^4.17.21",
     "table": "^5.4.6",
     "terminal-link": "^2.1.1",
